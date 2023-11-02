@@ -1,0 +1,9 @@
+# ignore built files
+dist/
+
+# ignore node_modules
+node_modules/
+
+# ignore specific files
+*.config.js
+*.test.js
