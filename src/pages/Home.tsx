@@ -1,16 +1,7 @@
-import React, { useEffect } from 'react';
-import { env } from '../config/env';
+import React from 'react';
 
 const Home: React.FC = () => {
-  useEffect(() => {
-    console.log(env);
-  }, []);
-
-  return (
-    <div>
-      <h1 className="text-3xl font-bold">Home</h1>
-    </div>
-  );
+  return <div>Home</div>;
 };
 
 export default Home;
