@@ -9,5 +9,3 @@ export interface Photo {
 export interface GetAllPhotosResponse {
   photos: Photo[];
 }
-
-// export interface PhotoService {}

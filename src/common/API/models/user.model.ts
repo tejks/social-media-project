@@ -34,5 +34,3 @@ export interface Company {
 export interface GetAllUsersResponse {
   users: IUser[];
 }
-
-// export interface UserService {}

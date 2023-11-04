@@ -7,5 +7,3 @@ export interface Album {
 export interface GetAllAlbumsResponse {
   albums: Album[];
 }
-
-// export interface AlbumService {}

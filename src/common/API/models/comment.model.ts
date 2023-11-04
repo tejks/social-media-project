@@ -9,5 +9,3 @@ export interface IComment {
 export interface GetAllCommentsResponse {
   posts: IComment[];
 }
-
-// export interface CommentService {}

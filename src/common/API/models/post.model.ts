@@ -8,7 +8,3 @@ export interface IPost {
 export interface GetAllPostsResponse {
   posts: IPost[];
 }
-
-export interface IPostService {
-  getAllPosts: () => HttpPromise<GetAllPostsResponse>;
-}
