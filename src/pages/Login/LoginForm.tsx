@@ -10,41 +10,39 @@ function LoginForm() {
           Sign in to your account
         </h1>
         <form className="space-y-4 md:space-y-6" action="#">
-          <div>
-            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">
-              Your email
-            </label>
-            <Input
-              type="email"
-              id="email"
-              className="placeholder:text-slate-400 placeholder:italic"
-              placeholder="user@example.com"
-            />
-          </div>
-          <div>
-            <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">
-              Password
-            </label>
-            <Input type="password" id="password" className="placeholder:text-slate-400" placeholder="••••••••" />
-          </div>
+          <Input
+            labelValue="Your email"
+            type="email"
+            id="email"
+            className="placeholder:text-slate-400 placeholder:italic mt-2 font-normal"
+            placeholder="user@example.com"
+          />
+          <Input
+            labelValue="Password"
+            type="password"
+            id="password"
+            className="placeholder:text-slate-400 mt-2"
+            placeholder="••••••••"
+          />
           <div className="flex items-center justify-between">
-            <div className="flex items-start cursor-pointer hover:text-fuchsia-700">
-              <div className="flex items-center h-5">
-                <input
-                  id="remember"
-                  type="checkbox"
-                  className="w-4 h-4 border border-gray-300 rounded bg-gray-50 accent-fuchsia-700 cursor-pointer"
-                />
-              </div>
-              <div className="ml-3 text-sm">
-                <label htmlFor="remember" className="font-medium text-gray-500 cursor-pointer hover:text-fuchsia-700">
+            <div className="flex items-start cursor-pointer">
+              <div className="flex items-center group">
+                <label
+                  htmlFor="remember"
+                  className="text-sm font-medium text-gray-500 cursor-pointer group-hover:text-fuchsia-700"
+                >
                   Remember me
+                  <input
+                    id="remember"
+                    type="checkbox"
+                    className="w-4 h-4 border border-gray-300 rounded bg-gray-50 accent-fuchsia-700 cursor-pointer group-hover:border-fuchsia-700 float-left mr-2 mt-0.5"
+                  />
                 </label>
               </div>
             </div>
-            <a href="#" className="text-sm font-medium text-gray-500 hover:underline hover:text-fuchsia-700">
+            <Link to={''} className="text-sm font-medium text-gray-500 hover:underline hover:text-fuchsia-700">
               Forgot password?
-            </a>
+            </Link>
           </div>
           <div className="text-center">
             <Link to={'/'}>
@@ -55,9 +53,9 @@ function LoginForm() {
           </div>
           <p className="text-sm font-light text-gray-500">
             Don’t have an account yet?{' '}
-            <a href="#" className="font-medium text-fuchsia-700 hover:underline">
+            <Link to={''} className="font-medium text-fuchsia-700 hover:underline">
               Sign up
-            </a>
+            </Link>
           </p>
         </form>
       </div>
