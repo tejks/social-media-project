@@ -1,13 +1,13 @@
 import clsx from 'clsx';
 import FieldWrapper, { WrapperPassThroughProps } from './FieldWrapper';
 
-export interface IOption {
+export interface Option {
   label: React.ReactNode;
   value: string | number;
 }
 
 interface SelectProps extends React.InputHTMLAttributes<HTMLSelectElement>, WrapperPassThroughProps {
-  options: IOption[];
+  options: Option[];
   className?: string;
 }
 
@@ -24,8 +24,8 @@ function Select({ className = '', labelValue, options, ...rest }: SelectProps) {
         <option disabled={true} selected={true} value="">
           -- Select --
         </option>
-        {options.map(({ label, value }) => (
-          <option key={label?.toString()} value={value}>
+        {options.map(({ label, value }, index) => (
+          <option key={index} value={value}>
             {label}
           </option>
         ))}
