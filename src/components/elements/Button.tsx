@@ -3,7 +3,6 @@ import clsx from 'clsx';
 const colors = {
     primary: "bg-fuchsia-700 text-white",
     inverse: "bg-white text-fuchsia-700",
-    second: "bg-fuchsia-700 text-white", // ???
   };
   
   const sizes = {
@@ -12,7 +11,7 @@ const colors = {
     lg: "py-2 px-8 text-lg",
   };
 
-interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children: string;
     color?: keyof typeof colors;
     size?: keyof typeof sizes;
@@ -21,7 +20,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     onClick: () => void;
 }
 
-function Button({ children, onClick, color = "primary", size="md", type = "button", className = "", ...rest}: Props){
+function Button({ children, onClick, color = "primary", size="md", type = "button", className = "", ...rest}: ButtonProps){
     return (
         <button 
             type={type} 
