@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import { logout } from '../../common/store/authSlice';
+import { useAppDispatch } from '../../common/store';
+import { faker } from '@faker-js/faker';
 
 interface UserProfileProps {
   name: string;
@@ -7,6 +11,11 @@ interface UserProfileProps {
 
 const UserProfile: React.FC<UserProfileProps> = ({ email, name }: UserProfileProps) => {
   const [isOpen, setIsOpen] = React.useState(false);
+
+  const dispatch = useAppDispatch();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const avatar = useMemo(() => faker.image.avatar(), [name]);
 
   return (
     <div className="flex flex-1 items-center justify-end">
@@ -22,16 +31,12 @@ const UserProfile: React.FC<UserProfileProps> = ({ email, name }: UserProfilePro
         }}
       >
         <span className="sr-only">Open user menu</span>
-        <div className="relative w-10 h-10 overflow-hidden rounded-full bg-gray-600">
-          <svg
-            className="absolute w-12 h-12 text-gray-400 -left-1"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"></path>
-          </svg>
-        </div>
+
+        <img
+          className="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+          src={avatar}
+          alt="Bordered avatar"
+        />
       </button>
 
       {isOpen ? (
@@ -50,9 +55,13 @@ const UserProfile: React.FC<UserProfileProps> = ({ email, name }: UserProfilePro
               </a>
             </li>
             <li>
-              <a href="#" className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">
+              <Link
+                to={'/'}
+                onClick={() => dispatch(logout())}
+                className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white"
+              >
                 Sign out
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
