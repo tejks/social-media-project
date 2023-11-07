@@ -41,7 +41,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ email, name }: UserProfilePro
 
       {isOpen ? (
         <div
-          className="z-50 absolute right-5 top-14 my-4 text-base list-none rounded-lg shadow bg-gray-700 divide-gray-600"
+          className="z-50 absolute right-5 top-14 my-4 text-base divide-y list-none rounded-lg shadow bg-gray-700 divide-gray-600"
           id="user-dropdown"
         >
           <div className="px-4 py-3">
@@ -51,19 +51,24 @@ const UserProfile: React.FC<UserProfileProps> = ({ email, name }: UserProfilePro
           <ul className="py-2" aria-labelledby="user-menu-button">
             <li>
               <a href="#" className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">
-                Settings
+                Dashboard
               </a>
             </li>
             <li>
-              <Link
-                to={'/'}
-                onClick={() => dispatch(logout())}
-                className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white"
-              >
-                Sign out
-              </Link>
+              <a href="#" className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">
+                Settings
+              </a>
             </li>
           </ul>
+          <div className="py-1">
+            <Link
+              to={'/'}
+              onClick={() => dispatch(logout())}
+              className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white"
+            >
+              Sign out
+            </Link>
+          </div>
         </div>
       ) : (
         ''
