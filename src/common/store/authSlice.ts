@@ -9,7 +9,12 @@ const authSlice = createSlice({
     user: IUser | null;
     token: null | string;
   },
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.user = null;
+      state.token = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addMatcher(authApi.endpoints.login.matchFulfilled, (state, { payload }) => {
       state.user = payload;
@@ -18,5 +23,7 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
+
+export const { logout } = authSlice.actions;
 
 export const selectCurrentUser = (state: RootState) => state.auth.user;

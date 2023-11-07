@@ -1,11 +1,11 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 
 import Home from './Home';
-import Login from './Login/Login';
+import Login from './Login';
 import Posts from './Posts';
 import Albums from './Albums';
 import Footer from '../components/Footer';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/Navbar/Navbar';
 import ErrorPage from '../components/ErrorPage';
 
 const router = createBrowserRouter([
