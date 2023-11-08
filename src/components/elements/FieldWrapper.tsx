@@ -9,7 +9,7 @@ interface WrapperProps {
 function FieldWrapper({ labelValue, className, children }: WrapperProps) {
   return (
     <div>
-      <label className={clsx('block text-sm font-medium text-gray-900', className)}>
+      <label className={clsx('block text-sm font-medium text-white', className)}>
         {labelValue}
         {children}
       </label>
