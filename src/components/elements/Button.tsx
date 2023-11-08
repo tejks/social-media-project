@@ -1,14 +1,15 @@
 import clsx from 'clsx';
+import { useNavigate } from 'react-router-dom';
 
 const colors = {
-  primary: 'bg-fuchsia-700 text-white',
-  inverse: 'bg-white text-fuchsia-700',
+  primary: 'bg-sky-800 text-sky-200 hover:bg-sky-900',
+  inverse: 'text-sky-200 bg-sky-800',
 };
 
 const sizes = {
-  sm: 'py-2 px-4 text-sm',
-  md: 'py-2 px-6 text-md',
-  lg: 'py-2 px-8 text-lg',
+  sm: 'py-2 px-4 text-sm font-medium',
+  md: 'py-3 px-6 text-sm font-medium',
+  lg: 'py-3 px-8 text-sm font-medium',
 };
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -16,6 +17,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   color?: keyof typeof colors;
   size?: keyof typeof sizes;
   type?: 'button' | 'submit';
+  to?: string;
   className?: string;
 }
 
@@ -23,21 +25,24 @@ function Button({
   children,
   onClick,
   color = 'primary',
-  size = 'md',
+  size = 'sm',
   type = 'button',
   className = '',
+  to,
   ...rest
 }: ButtonProps) {
+  const navigate = useNavigate();
+
   return (
     <button
       type={type}
       className={clsx(
-        'inline-block px-5 py-3 text-sm font-medium text-white bg-fuchsia-700 rounded hover:bg-fuchsia-800 focus:outline-none focus:ring',
+        'inline-block ease-in duration-200 shadow-2xl hover:shadow-sky-300/50 rounded-2xl',
         colors[color],
         sizes[size],
         className,
       )}
-      onClick={onClick}
+      onClick={to ? () => navigate(to) : onClick}
       {...rest}
     >
       {children}
