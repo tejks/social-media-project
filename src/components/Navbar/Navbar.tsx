@@ -1,11 +1,12 @@
 /* eslint-disable no-constant-condition */
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useTypedSelector } from '../../common/store';
 import { selectCurrentUser } from '../../common/store/authSlice';
 import SearchBar from './SearchBar';
 import UserProfile from './UserProfile';
+import Button from '../elements/Button';
 
 interface NavbarMenuElement {
   name: string;
@@ -39,7 +40,7 @@ const Navbar: React.FC = () => {
   }, [location]);
 
   return (
-    <nav className="bg-gray-950">
+    <nav className="bg-gray-950 fixed w-screen">
       <div className="flex justify-between p-5">
         <div className="flex flex-1 justify-start items-center">
           <a href="https://flowbite.com/">
@@ -70,13 +71,14 @@ const Navbar: React.FC = () => {
 
         {!user ? (
           <div className="flex flex-1 items-center justify-end">
-            <Link
-              to={'/login'}
+            <Button
               type="button"
-              className="text-blue-300 h-9 bg-blue-800 hover:bg-blue-800 font-medium rounded-2xl text-sm px-4 py-2 text-center me-3"
+              size="sm"
+              to="/login"
+              // className="text-blue-300 h-9 bg-blue-800 hover:bg-blue-800 font-medium rounded-2xl text-sm px-4 py-2 text-center me-3"
             >
               Login
-            </Link>
+            </Button>
           </div>
         ) : (
           <UserProfile name={user.name} email={user.email} />
