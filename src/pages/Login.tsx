@@ -6,11 +6,12 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import Button from '../components/elements/Button';
 import Input from '../components/elements/Input';
 
+interface FormValues {
+  email: string;
+  password: string;
+}
+
 const Login: React.FC = () => {
-  interface FormValues {
-    email: string;
-    password: string;
-  }
 
   const validationSchema = z.object({
     email: z.string().min(1, 'Email is required').email('Invalid email format'),
