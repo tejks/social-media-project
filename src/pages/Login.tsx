@@ -12,7 +12,7 @@ const Login: React.FC = () => {
   const [login] = useLoginMutation();
 
   const onSubmit = () => {
-    login(email).then(() => navigate('/'));
+    login(email).then(() => navigate(-1));
   };
 
   return (
