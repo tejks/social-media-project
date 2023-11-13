@@ -4,7 +4,7 @@ import Home from './Home';
 import Login from './Login';
 import Posts from './Posts/Posts';
 import Albums from './Albums';
-import Footer from '../components/Layout/Footer';
+// import Footer from '../components/Layout/Footer';
 import Navbar from '../components/Layout/Navbar/Navbar';
 import ErrorPage from '../components/ErrorPage';
 import Post from './Posts/Post';
@@ -16,7 +16,7 @@ const router = createBrowserRouter([
       <>
         <Navbar />
         <Outlet />
-        <Footer />
+        {/* <Footer /> */}
       </>
     ),
     errorElement: <ErrorPage />,
