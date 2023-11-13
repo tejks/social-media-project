@@ -1,5 +1,7 @@
 import clsx from 'clsx';
 import { IComment } from '../common/API/models/comment.model';
+import { useEffect, useRef, useState } from 'react';
+import Dropdown from './Dropdown';
 
 interface CommentProps {
   comment: IComment;
@@ -7,9 +9,32 @@ interface CommentProps {
 }
 
 const Comment: React.FC<CommentProps> = ({ commentId, comment }) => {
+  const dropdownOptions = [
+    { label: 'Report', location: '/' },
+    { label: 'Edit', location: '/', requiredOwner: true },
+    { label: 'Delete', location: '/', color: 'text-red-600', requiredOwner: true },
+  ];
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    const handler = (event: MouseEvent) => {
+      if (!dropdownRef.current?.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handler);
+
+    return () => {
+      document.removeEventListener('mousedown', handler);
+    };
+  });
+
   return (
     <article key={commentId} className={clsx('p-6 text-base', commentId != 0 ? 'border-t  border-gray-800' : '')}>
-      <footer className="flex justify-between items-center mb-2">
+      <footer className="flex justify-between items-center mb-2 relative">
         <div className="flex items-center">
           <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
             <img
@@ -24,8 +49,9 @@ const Comment: React.FC<CommentProps> = ({ commentId, comment }) => {
         <button
           id="dropdownComment1Button"
           data-dropdown-toggle="dropdownComment1"
-          className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-400 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 rounded-lg  hover:bg-gray-700 "
           type="button"
+          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         >
           <svg
             className="w-4 h-4"
@@ -38,38 +64,11 @@ const Comment: React.FC<CommentProps> = ({ commentId, comment }) => {
           </svg>
           <span className="sr-only">Comment settings</span>
         </button>
-        <div
-          id="dropdownComment1"
-          className="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-        >
-          <ul
-            className="py-1 text-sm text-gray-700 dark:text-gray-200"
-            aria-labelledby="dropdownMenuIconHorizontalButton"
-          >
-            <li>
-              <a href="#" className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                Edit
-              </a>
-            </li>
-            <li>
-              <a href="#" className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                Remove
-              </a>
-            </li>
-            <li>
-              <a href="#" className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                Report
-              </a>
-            </li>
-          </ul>
-        </div>
+        <Dropdown isOpen={isDropdownOpen} options={dropdownOptions} ref={dropdownRef} />
       </footer>
       <p className="text-gray-500 dark:text-gray-400">{comment.body}</p>
       <div className="flex items-center mt-4 space-x-4">
-        <button
-          type="button"
-          className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium"
-        >
+        <button type="button" className="flex items-center text-sm hover:underline text-gray-400 font-medium">
           <svg
             className="mr-1.5 w-3.5 h-3.5"
             aria-hidden="true"
