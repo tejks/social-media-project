@@ -16,11 +16,11 @@ const Post: React.FC = () => {
   const navigate = useNavigate();
   const user = useTypedSelector(selectCurrentUser);
   const { id } = useParams<PostRouteParams>();
-  const { data: post } = useGetPostQuery(Number(id));
-  const { data: comments } = useGetCommentsForPostQuery(Number(id));
+  const { data: post, isLoading: isPostLoading } = useGetPostQuery(Number(id));
+  const { data: comments, isLoading: isCommentsLoading } = useGetCommentsForPostQuery(Number(id));
 
-  if (!post) return 'Loading...';
-  console.log(comments);
+  if (isPostLoading && isCommentsLoading) return 'Loading...';
+  if (!post) return 'Post not found';
 
   return (
     <section className="w-screen flex justify-center">
