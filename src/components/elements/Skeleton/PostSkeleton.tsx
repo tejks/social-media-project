@@ -1,6 +1,6 @@
 const PostSkeleton: React.FC = () => {
   return (
-    <div className="flex w-full mx-4 my-4 md:mx-auto max-w-md md:max-w-2xl">
+    <div className="flex my-3">
       <div role="status" className="animate-pulse w-full">
         <div className="flex items-start mt-4 space-x-3 px-4">
           <svg
