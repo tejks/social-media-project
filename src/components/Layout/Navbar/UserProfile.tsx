@@ -1,8 +1,9 @@
+import { faker } from '@faker-js/faker';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { logout } from '../../../common/store/authSlice';
-import { useAppDispatch } from '../../../common/store';
-import { faker } from '@faker-js/faker';
+
+import { useAppDispatch } from '@common/store';
+import { logout } from '@common/store/authSlice';
 
 interface UserProfileProps {
   name: string;

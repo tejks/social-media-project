@@ -1,12 +1,13 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetPostQuery } from '../../common/API/services/post';
 
-import Comment from '../../components/Comment';
-import AddElementWithTextarea from '../../components/AddElementWithTextarea';
-import { useTypedSelector } from '../../common/store';
-import { selectCurrentUser } from '../../common/store/authSlice';
-import { useGetCommentsForPostQuery } from '../../common/API/services/comment';
+import { useGetCommentsForPostQuery } from '@common/API/services/comment';
+import { useGetPostQuery } from '@common/API/services/post';
+import { useTypedSelector } from '@common/store';
+import { selectCurrentUser } from '@common/store/authSlice';
+
+import AddElementWithTextarea from '@components/AddElementWithTextarea';
+import Comment from '@components/Comment';
 
 type PostRouteParams = {
   id: string;

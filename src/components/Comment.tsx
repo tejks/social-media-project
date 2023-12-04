@@ -1,7 +1,9 @@
 import clsx from 'clsx';
-import { IComment } from '../common/API/models/comment.model';
 import { useEffect, useRef, useState } from 'react';
+
 import Dropdown from './Dropdown';
+
+import { IComment } from '@common/API/models/comment.model';
 
 interface CommentProps {
   comment: IComment;

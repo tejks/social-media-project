@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 
-export const ScrollToTop = () => {
+const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   const toggleVisibility = () => {
@@ -50,3 +50,5 @@ export const ScrollToTop = () => {
     </div>
   );
 };
+
+export default ScrollToTop;

@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Input from '../components/elements/Input';
-import { useLoginMutation } from '../common/API/services/auth';
-import Button from '../components/elements/Button';
+
+import { useLoginMutation } from '@common/API/services/auth';
+
+import Button from '@components/elements/Button';
+import Input from '@components/elements/Input';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();

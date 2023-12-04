@@ -2,11 +2,13 @@
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { useTypedSelector } from '../../../common/store';
-import { selectCurrentUser } from '../../../common/store/authSlice';
+
+import { useTypedSelector } from '@common/store';
+import { selectCurrentUser } from '@common/store/authSlice';
+
+import Button from '@components/elements/Button';
 import SearchBar from './SearchBar';
 import UserProfile from './UserProfile';
-import Button from '../../elements/Button';
 
 interface NavbarMenuElement {
   name: string;

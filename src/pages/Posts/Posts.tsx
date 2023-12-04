@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useGetAllPostsQuery } from '../../common/API/services/post';
-import { useTypedSelector } from '../../common/store';
-import { selectCurrentUser } from '../../common/store/authSlice';
-import PostTextarea from '../../components/AddElementWithTextarea';
-import PostElement from '../../components/PostElement';
-import { ScrollToTop } from '../../components/ScrollToTop';
-import PostSkeleton from '../../components/elements/Skeleton/PostSkeleton';
+
+import { useGetAllPostsQuery } from '@common/API/services/post';
+import { useTypedSelector } from '@common/store';
+import { selectCurrentUser } from '@common/store/authSlice';
+
+import PostTextarea from '@components/AddElementWithTextarea';
+import PostElement from '@components/PostElement';
+import ScrollToTop from '@components/ScrollToTop';
+import PostSkeleton from '@components/elements/Skeleton/PostSkeleton';
 
 const Posts: React.FC = () => {
   const user = useTypedSelector(selectCurrentUser);

@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IPost } from '../common/API/models/post.model';
+
+import { IPost } from '@common/API/models/post.model';
 
 interface PostElementProps {
   post: IPost;
