@@ -2,12 +2,14 @@ import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { IPost } from '@common/API/models/post.model';
+import clsx from 'clsx';
 
 interface PostElementProps {
   post: IPost;
+  route?: boolean;
 }
 
-const PostElement: React.FC<PostElementProps> = ({ post }) => {
+const PostElement: React.FC<PostElementProps> = ({ post, route = true }) => {
   const navigate = useNavigate();
 
   const getFullDate = useCallback((date: Date) => {
@@ -21,20 +23,20 @@ const PostElement: React.FC<PostElementProps> = ({ post }) => {
   }, []);
 
   return (
-    <div className="post-element__context grid grid-cols-10 gap-3 sm:gap-4 px-3 py-4 sm:py-4 sm:px-4 my-4 text-xs sm:text-sm bg-gray-800 border border-gray-700 rounded-lg shadow  ">
-      <div className="post-element__image-box hidden sm:col-start-1 sm:col-end-1 sm:flex justify-center">
+    <div className="post-element__context my-4 grid grid-cols-10 gap-3 rounded-lg border border-gray-700 bg-gray-800 px-3 py-4 text-sm shadow sm:gap-4 sm:px-4 sm:py-4">
+      <div className="post-element__image-box hidden justify-center sm:col-start-1 sm:col-end-1 sm:flex">
         <img
-          className="w-8 h-8 sm:w-12 sm:h-12 rounded-full object-cover shadow"
+          className="h-8 w-8 rounded-full object-cover shadow sm:h-12 sm:w-12"
           src="https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
           alt="avatar"
         />
       </div>
 
       <div className="post-element__content-box col-start-1 col-end-11 sm:col-start-2 sm:col-end-11">
-        <div className="cursor-pointer" onClick={() => navigate(`${post.id}`)}>
-          <div className="flex items-center justify-start relative">
+        <div className={clsx(route ? 'cursor-pointer' : '')} onClick={() => (route ? navigate(`${post.id}`) : null)}>
+          <div className="relative flex items-center justify-start">
             <img
-              className="w-8 h-8 sm:hidden rounded-full object-cover shadow mr-3"
+              className="mr-3 h-8 w-8 rounded-full object-cover shadow sm:hidden"
               src="https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
               alt="avatar"
             />
@@ -68,10 +70,10 @@ const PostElement: React.FC<PostElementProps> = ({ post }) => {
 
           <p className="mt-3 text-gray-100">{post.body}</p>
         </div>
-        <div className="mt-3 sm:mt-6 flex items-center">
-          <div className="flex mr-3 sm:mr-4 text-gray-400 text-sm cursor-pointer">
+        <div className="mt-3 flex items-center sm:mt-6">
+          <div className="mr-3 flex cursor-pointer text-sm text-gray-400 sm:mr-4">
             {Math.random() >= 0.5 ? (
-              <svg fill="none" viewBox="0 0 24 24" className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1" stroke="currentColor">
+              <svg fill="none" viewBox="0 0 24 24" className="mr-1 h-3.5 w-3.5 sm:h-4 sm:w-4" stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -83,7 +85,7 @@ const PostElement: React.FC<PostElementProps> = ({ post }) => {
               <svg
                 fill="none"
                 viewBox="0 0 24 24"
-                className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1 text-red-500"
+                className="mr-1 h-3.5 w-3.5 text-red-500 sm:h-4 sm:w-4"
                 stroke="currentColor"
               >
                 <path
@@ -96,8 +98,8 @@ const PostElement: React.FC<PostElementProps> = ({ post }) => {
             )}
             <span>12</span>
           </div>
-          <div className="flex mr-3 sm:mr-4 text-gray-400 text-sm cursor-pointer">
-            <svg fill="none" viewBox="0 0 24 24" className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1" stroke="currentColor">
+          <div className="mr-3 flex cursor-pointer text-sm text-gray-400 sm:mr-4">
+            <svg fill="none" viewBox="0 0 24 24" className="mr-1 h-3.5 w-3.5 sm:h-4 sm:w-4" stroke="currentColor">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -107,8 +109,8 @@ const PostElement: React.FC<PostElementProps> = ({ post }) => {
             </svg>
             <span>8</span>
           </div>
-          <div className="flex mr-3 sm:mr-4 text-gray-400 text-sm cursor-pointer">
-            <svg fill="none" viewBox="0 0 24 24" className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1" stroke="currentColor">
+          <div className="mr-3 flex cursor-pointer text-sm text-gray-400 sm:mr-4">
+            <svg fill="none" viewBox="0 0 24 24" className="mr-1 h-3.5 w-3.5 sm:h-4 sm:w-4" stroke="currentColor">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
