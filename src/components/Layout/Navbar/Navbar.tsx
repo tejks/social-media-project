@@ -2,11 +2,13 @@
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { useTypedSelector } from '../../common/store';
-import { selectCurrentUser } from '../../common/store/authSlice';
+
+import { useTypedSelector } from '@common/store';
+import { selectCurrentUser } from '@common/store/authSlice';
+
+import Button from '@components/elements/Button';
 import SearchBar from './SearchBar';
 import UserProfile from './UserProfile';
-import Button from '../elements/Button';
 
 interface NavbarMenuElement {
   name: string;
@@ -40,7 +42,7 @@ const Navbar: React.FC = () => {
   }, [location]);
 
   return (
-    <nav className="bg-gray-950 fixed w-screen">
+    <nav className="bg-gray-950 fixed w-screen z-20">
       <div className="flex justify-between p-5">
         <div className="flex flex-1 justify-start items-center">
           <a href="https://flowbite.com/">

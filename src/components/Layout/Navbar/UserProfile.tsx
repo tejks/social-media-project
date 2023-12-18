@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react';
-import { Link } from 'react-router-dom';
-import { logout } from '../../common/store/authSlice';
-import { useAppDispatch } from '../../common/store';
 import { faker } from '@faker-js/faker';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import { useAppDispatch } from '@common/store';
+import { logout } from '@common/store/authSlice';
 
 interface UserProfileProps {
   name: string;
@@ -10,9 +11,24 @@ interface UserProfileProps {
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({ email, name }: UserProfileProps) => {
-  const [isOpen, setIsOpen] = React.useState(false);
-
   const dispatch = useAppDispatch();
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    const handler = (event: MouseEvent) => {
+      if (!dropdownRef.current?.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handler);
+
+    return () => {
+      document.removeEventListener('mousedown', handler);
+    };
+  });
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const avatar = useMemo(() => faker.image.avatar(), [name]);
@@ -27,7 +43,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ email, name }: UserProfilePro
         data-dropdown-toggle="user-dropdown"
         data-dropdown-placement="bottom"
         onClick={() => {
-          setIsOpen(!isOpen);
+          setIsDropdownOpen(!isDropdownOpen);
         }}
       >
         <span className="sr-only">Open user menu</span>
@@ -39,10 +55,11 @@ const UserProfile: React.FC<UserProfileProps> = ({ email, name }: UserProfilePro
         />
       </button>
 
-      {isOpen ? (
+      {isDropdownOpen ? (
         <div
           className="z-50 absolute right-5 top-14 my-4 text-base divide-y list-none rounded-lg shadow bg-gray-700 divide-gray-600"
           id="user-dropdown"
+          ref={dropdownRef}
         >
           <div className="px-4 py-3">
             <span className="block text-sm text-white">{name}</span>
