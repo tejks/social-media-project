@@ -1,12 +1,15 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 
 import ErrorPage from '@components/ErrorPage';
+import Footer from '@components/Layout/Footer';
 import Navbar from '@components/Layout/Navbar/Navbar';
+
+import Post from '@pages/Posts/Post';
+import Posts from '@pages/Posts/Posts';
+
 import Albums from './Albums';
 import Home from './Home';
 import Login from './Login';
-import Post from './Posts/Post';
-import Posts from './Posts/Posts';
 
 const router = createBrowserRouter([
   {
@@ -15,6 +18,7 @@ const router = createBrowserRouter([
       <>
         <Navbar />
         <Outlet />
+        <Footer />
       </>
     ),
     errorElement: <ErrorPage />,
