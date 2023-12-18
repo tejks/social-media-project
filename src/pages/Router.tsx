@@ -1,7 +1,6 @@
-import { createBrowserRouter, Outlet } from 'react-router-dom';
+import { Outlet, createBrowserRouter } from 'react-router-dom';
 
 import ErrorPage from '@components/ErrorPage';
-import Footer from '@components/Layout/Footer';
 import Navbar from '@components/Layout/Navbar/Navbar';
 
 import Post from '@pages/Posts/Post';
@@ -14,13 +13,7 @@ import Login from './Login';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <>
-        <Navbar />
-        <Outlet />
-        <Footer />
-      </>
-    ),
+    element: <Outlet />,
     errorElement: <ErrorPage />,
     children: [
       {
@@ -29,19 +22,39 @@ const router = createBrowserRouter([
       },
       {
         path: '/login',
-        element: <Login />,
+        element: (
+          <>
+            <Navbar />
+            <Login />
+          </>
+        ),
       },
       {
         path: '/posts',
-        element: <Posts />,
+        element: (
+          <>
+            <Navbar />
+            <Posts />
+          </>
+        ),
       },
       {
         path: '/posts/:id',
-        element: <Post />,
+        element: (
+          <>
+            <Navbar />
+            <Post />
+          </>
+        ),
       },
       {
         path: '/albums',
-        element: <Albums />,
+        element: (
+          <>
+            <Navbar />
+            <Albums />
+          </>
+        ),
       },
     ],
   },
