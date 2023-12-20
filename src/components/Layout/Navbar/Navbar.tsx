@@ -9,8 +9,8 @@ import { logout, selectCurrentUser } from '@common/store/authSlice';
 import Button from '@components/elements/Button';
 import UserProfile from './UserProfile';
 
-import background1 from '@assets/background-element-1.png';
-import background2 from '@assets/check2.png';
+import backgroundElement1 from '@assets/background-element-1.png';
+import backgroundElement2 from '@assets/background-element-2.png';
 import logo from '@assets/logo.jpg';
 
 interface NavbarMenuElement {
@@ -100,7 +100,7 @@ const Navbar: React.FC = () => {
 
       <div className="flex justify-end px-5 py-3 lg:hidden">
         <div className="absolute left-0 top-0 z-10 w-full rotate-180 opacity-70">
-          <img src={background2} alt="" width={400} />
+          <img src={backgroundElement2} alt="" width={400} />
         </div>
 
         <svg
@@ -180,7 +180,7 @@ const Navbar: React.FC = () => {
           </nav>
 
           <div className="absolute bottom-0 right-0 -z-10 rotate-180 opacity-70">
-            <img src={background1} alt="" width={250} />
+            <img src={backgroundElement1} alt="" width={200} />
           </div>
         </div>
       </div>
