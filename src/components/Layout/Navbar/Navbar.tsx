@@ -81,12 +81,6 @@ const Navbar: React.FC = () => {
           </div>
         </div>
 
-        {/* <div className="absolute left-1/4 top-0 z-10 rotate-180 opacity-70">
-          <img src={background2} alt="" width={400} />
-        </div> */}
-
-        {/* <SearchBar /> */}
-
         {!user ? (
           <div className="mx-5 flex flex-1 items-center justify-end">
             <Button type="button" size="sm" to="/login">

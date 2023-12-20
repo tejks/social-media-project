@@ -32,7 +32,7 @@ const Posts: React.FC = () => {
         <img src={backgroundElement1} alt="" width={200} />
       </div>
 
-      <div className="posts__context flex w-full flex-col justify-center px-4 md:max-w-4xl md:px-24 lg:border-x lg:border-[#1c5c75a2] lg:px-16 xl:px-24">
+      <div className="posts__context flex w-full flex-col justify-center px-4 md:max-w-4xl md:px-24 lg:px-16 xl:px-24">
         <h1 className="posts__header mt-32 text-3xl font-semibold text-white">Posts</h1>
         <hr className="my-4 border-gray-800" />
 

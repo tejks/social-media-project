@@ -43,7 +43,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ email, name, isMobile }: User
   if (isMobile)
     return (
       <div>
-        <img className="w-20 rounded-full" src={avatar} alt="Bordered avatar" />
+        <img className="w-20 rounded-full opacity-80" src={avatar} alt="Bordered avatar" />
       </div>
     );
 
