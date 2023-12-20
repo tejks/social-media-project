@@ -12,7 +12,7 @@ function Textarea({ className = '', labelValue, register, error, ...rest }: Text
     <FieldWrapper labelValue={labelValue} error={error}>
       <textarea
         className={clsx(
-          'block p-2.5 w-full rounded-lg text-sm border bg-gray-600 border-gray-500 placeholder-gray-400 text-white',
+          'block w-full rounded-lg border border-gray-500 bg-gray-600 p-2.5 text-sm text-white placeholder-gray-400',
           className,
         )}
         {...register}
