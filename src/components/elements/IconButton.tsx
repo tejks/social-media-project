@@ -22,7 +22,7 @@ const IconButton: React.FC<IconButtonProps> = ({
     <button
       type={type}
       className={clsx(
-        'inline-flex justify-center p-2 rounded-lg cursor-pointer text-sky-100 hover:text-white hover:bg-gray-600',
+        'inline-flex cursor-pointer justify-center rounded-lg p-2 text-sky-100 hover:bg-gray-600 hover:text-white',
         className,
       )}
       onClick={to ? () => navigate(to) : onClick}

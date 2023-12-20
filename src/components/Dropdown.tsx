@@ -19,7 +19,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(({ options, isOpen },
       id="dropdown"
       ref={ref}
       className={clsx(
-        'absolute top-10 right-0 z-10 divide-y divide-gray-100 rounded-lg shadow w-32 bg-gray-700',
+        'absolute right-0 top-10 z-10 w-32 divide-y divide-gray-100 rounded-lg bg-gray-700 shadow',
         !isOpen ? 'hidden' : '',
       )}
     >
@@ -28,7 +28,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(({ options, isOpen },
           <li key={index}>
             <p
               className={clsx(
-                'block px-4 py-1.5 hover:bg-gray-600 hover:text-white cursor-pointer',
+                'block cursor-pointer px-4 py-1.5 hover:bg-gray-600 hover:text-white',
                 color ? color : '',
               )}
             >

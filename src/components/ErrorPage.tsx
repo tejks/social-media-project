@@ -11,9 +11,9 @@ const ErrorPage: React.FC = () => {
     }
 
     return (
-      <div className="grid h-screen px-4 bg-white place-content-center">
+      <div className="grid h-screen place-content-center bg-white px-4">
         <div className="text-center">
-          <h1 className="font-black text-gray-200 text-9xl">{error.status}</h1>
+          <h1 className="text-9xl font-black text-gray-200">{error.status}</h1>
 
           <p className="text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl">Uh-oh!</p>
 
@@ -21,7 +21,7 @@ const ErrorPage: React.FC = () => {
 
           <Link
             to={'/'}
-            className="inline-block px-5 py-3 mt-6 text-sm font-medium text-white bg-fuchsia-700 rounded hover:bg-fuchsia-800 focus:outline-none focus:ring"
+            className="mt-6 inline-block rounded bg-fuchsia-700 px-5 py-3 text-sm font-medium text-white hover:bg-fuchsia-800 focus:outline-none focus:ring"
           >
             Go Back Home
           </Link>

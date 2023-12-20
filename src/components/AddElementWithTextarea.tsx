@@ -15,14 +15,14 @@ const AddElementWithTextarea: React.FC<AddElementWithTextareaProps> = ({ isAuth,
 
   const context = (
     <div className={clsx(!isAuth ? 'opacity-80 blur-sm' : '')}>
-      <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+      <div className="mb-4 rounded-lg rounded-t-lg border border-gray-200 bg-white px-4 py-2 dark:border-gray-700 dark:bg-gray-800">
         <label htmlFor={name} className="sr-only">
           Your {name}
         </label>
         <textarea
           id={name}
           rows={3}
-          className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+          className="w-full border-0 px-0 text-sm text-gray-900 focus:outline-none focus:ring-0 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
           placeholder={`Write a ${name}...`}
           required
           value={textareaValue}
@@ -35,7 +35,7 @@ const AddElementWithTextarea: React.FC<AddElementWithTextareaProps> = ({ isAuth,
         </Button>
         <IconButton className="ml-4">
           <svg
-            className="w-5 h-5"
+            className="h-5 w-5"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -63,7 +63,7 @@ const AddElementWithTextarea: React.FC<AddElementWithTextareaProps> = ({ isAuth,
         </IconButton>
         <IconButton>
           <svg
-            className="w-5 h-5"
+            className="h-5 w-5"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -84,8 +84,8 @@ const AddElementWithTextarea: React.FC<AddElementWithTextareaProps> = ({ isAuth,
   return (
     <form className="relative mb-14 mt-8 opacity-80">
       {!isAuth ? (
-        <div className="w-full h-full absolute z-10 flex justify-center items-center">
-          <Link to={'/login'} className="text-sky-500 font-bold">
+        <div className="absolute z-10 flex h-full w-full items-center justify-center">
+          <Link to={'/login'} className="font-bold text-[#FB9D1F]">
             Sign in to {name}
           </Link>
         </div>

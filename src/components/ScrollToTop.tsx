@@ -34,11 +34,11 @@ const ScrollToTop = () => {
         onClick={scrollToTop}
         className={clsx(
           isVisible ? '' : 'hidden',
-          'bg-sky-800 hover:bg-sky-900 inline-flex items-center rounded-full p-3 shadow-sm transition-opacity',
+          'inline-flex items-center rounded-full bg-[#1C5C75] p-3 shadow-sm transition-opacity hover:bg-[#1c5c75]',
         )}
       >
         <svg
-          className="w-6 h-6 text-sky-200"
+          className="h-6 w-6 text-[#FB9D1F]"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

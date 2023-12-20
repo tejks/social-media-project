@@ -6,7 +6,8 @@ export default {
     extend: {
       margin: {
         '0.25': '1px',
-      }},
+      },
+    },
   },
   plugins: [],
 } satisfies Config;
