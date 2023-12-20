@@ -1,21 +1,60 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { env } from '../../config/env';
-import { IUser } from '../models/user.model';
 
 export const authApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: env.VITE_JSONPLACEHOLDER_URL }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000', credentials: 'include' }),
   endpoints: (builder) => ({
-    login: builder.mutation<IUser | null, string>({
+    signin: builder.mutation<any, { email: string; password: string }>({
+      query: ({ email, password }) => ({
+        url: 'auth/signin',
+        method: 'POST',
+        body: {
+          username: email,
+          password,
+        },
+      }),
+      transformResponse: (response: any[]) => {
+        console.log(response);
+        return response;
+      },
+    }),
+    signup: builder.mutation<any, string>({
       query: () => ({
-        url: 'users',
+        url: 'auth/signup',
+        method: 'POST',
+        body: JSON.stringify({
+          email: 'szym@gmai.com',
+          password: '123123123',
+          firstName: 'Szymon',
+          lastName: 'Szymon',
+        }),
+      }),
+      transformResponse: (response: any[]) => {
+        console.log(response);
+        return response;
+      },
+    }),
+    signout: builder.mutation<any, void>({
+      query: () => ({
+        url: 'auth/signout',
+        method: 'POST',
+      }),
+      transformResponse: (response: any) => {
+        console.log(response);
+        return response;
+      },
+    }),
+    current: builder.query<any, void>({
+      query: () => ({
+        url: 'auth/current',
         method: 'GET',
       }),
-      transformResponse: (response: IUser[], _, arg) => {
-        const user = response.find((user) => user.email === arg);
-        return user ? user : null;
+      transformResponse: (response: any) => {
+        console.log(response);
+        return response;
       },
     }),
   }),
 });
 
-export const { useLoginMutation } = authApi;
+export const { useSigninMutation, useSignupMutation, useSignoutMutation, useCurrentQuery } = authApi;

@@ -2,8 +2,8 @@ import { ConfigureStoreOptions, configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 import { authApi } from '../API/services/auth';
-import { postApi } from '../API/services/post';
 import { commentApi } from '../API/services/comment';
+import { postApi } from '../API/services/post';
 
 import auth from './authSlice';
 

@@ -2,8 +2,7 @@ import { faker } from '@faker-js/faker';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import { useAppDispatch } from '@common/store';
-import { logout } from '@common/store/authSlice';
+import { useSignoutMutation } from '@/common/API/services/auth';
 
 interface UserProfileProps {
   name: string;
@@ -12,7 +11,7 @@ interface UserProfileProps {
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({ email, name, isMobile }: UserProfileProps) => {
-  const dispatch = useAppDispatch();
+  const [signOut] = useSignoutMutation();
   const location = useLocation();
 
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -91,7 +90,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ email, name, isMobile }: User
             <div className="py-1">
               <Link
                 to={location}
-                onClick={() => dispatch(logout())}
+                onClick={() => signOut()}
                 className="block px-4 py-2 text-sm text-gray-200 hover:bg-[#FB9D1F] hover:text-white"
               >
                 Sign out

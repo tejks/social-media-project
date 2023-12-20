@@ -3,12 +3,13 @@ import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 
-import { useAppDispatch, useTypedSelector } from '@common/store';
-import { logout, selectCurrentUser } from '@common/store/authSlice';
+import { useTypedSelector } from '@common/store';
+import { selectCurrentUser } from '@common/store/authSlice';
 
 import Button from '@components/elements/Button';
 import UserProfile from './UserProfile';
 
+import { useSignoutMutation } from '@/common/API/services/auth';
 import backgroundElement1 from '@assets/background-element-1.png';
 import backgroundElement2 from '@assets/background-element-2.png';
 import logo from '@assets/logo.jpg';
@@ -22,11 +23,10 @@ interface NavbarMenuElement {
 
 const Navbar: React.FC = () => {
   const location = useLocation();
-  const dispatch = useAppDispatch();
   const user = useTypedSelector(selectCurrentUser);
+  const [signOut] = useSignoutMutation();
 
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
-
   const [navbarMenu, setNavbarMenu] = useState<NavbarMenuElement[]>([
     { name: 'Home', url: '/', isActive: true },
     { name: 'Posts', url: '/posts', isActive: false },
@@ -162,7 +162,7 @@ const Navbar: React.FC = () => {
                   to={location}
                   onClick={() => {
                     setIsNavbarOpen(false);
-                    dispatch(logout());
+                    signOut();
                   }}
                   className={clsx('block bg-transparent py-5 text-2xl font-semibold text-gray-500')}
                   aria-current="page"

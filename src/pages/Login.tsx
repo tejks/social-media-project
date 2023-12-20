@@ -1,11 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { z } from 'zod';
 
-import { useLoginMutation } from '@common/API/services/auth';
-
+import { useSigninMutation } from '@/common/API/services/auth';
 import Button from '@components/elements/Button';
 import Input from '@components/elements/Input';
 
@@ -29,10 +28,8 @@ const Login: React.FC = () => {
     mode: 'onChange',
   });
 
-  const [login] = useLoginMutation();
-  const navigate = useNavigate();
-
-  const onSubmit: SubmitHandler<FormValues> = ({ email }) => login(email).then(() => navigate(-1));
+  const [signIn] = useSigninMutation();
+  const onSubmit: SubmitHandler<FormValues> = async ({ email, password }) => signIn({ email, password });
 
   return (
     <div className="flex h-screen flex-col items-center justify-center">
