@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { useAppDispatch } from '@common/store';
 import { logout } from '@common/store/authSlice';
@@ -13,6 +13,7 @@ interface UserProfileProps {
 
 const UserProfile: React.FC<UserProfileProps> = ({ email, name, isMobile }: UserProfileProps) => {
   const dispatch = useAppDispatch();
+  const location = useLocation();
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -62,16 +63,12 @@ const UserProfile: React.FC<UserProfileProps> = ({ email, name, isMobile }: User
         >
           <span className="sr-only">Open user menu</span>
 
-          <img
-            className="h-10 w-10 rounded-full p-1 ring-2 ring-gray-300 dark:ring-gray-500"
-            src={avatar}
-            alt="Bordered avatar"
-          />
+          <img className="h-11 w-11 rounded-full" src={avatar} alt="Bordered avatar" />
         </button>
 
         {isDropdownOpen ? (
           <div
-            className="absolute right-5 top-14 z-50 my-4 list-none divide-y divide-gray-600 rounded-lg bg-gray-700 text-base shadow"
+            className="absolute right-5 top-16 z-50 my-4 list-none divide-y divide-[#1c5c7585] rounded-lg border-[#1c5c75] bg-[#1c5c7593] text-base shadow"
             id="user-dropdown"
             ref={dropdownRef}
           >
@@ -84,7 +81,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ email, name, isMobile }: User
                 <li key={element.name}>
                   <Link
                     to={element.url}
-                    className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-600 hover:text-white"
+                    className="block px-4 py-2 text-sm text-gray-200 hover:bg-[#fb9c1fb6] hover:text-white"
                   >
                     {element.name}
                   </Link>
@@ -93,9 +90,9 @@ const UserProfile: React.FC<UserProfileProps> = ({ email, name, isMobile }: User
             </ul>
             <div className="py-1">
               <Link
-                to={'/'}
+                to={location}
                 onClick={() => dispatch(logout())}
-                className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-600 hover:text-white"
+                className="block px-4 py-2 text-sm text-gray-200 hover:bg-[#FB9D1F] hover:text-white"
               >
                 Sign out
               </Link>

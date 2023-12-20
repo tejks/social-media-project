@@ -9,6 +9,8 @@ import PostElement from '@components/PostElement';
 import ScrollToTop from '@components/ScrollToTop';
 import PostSkeleton from '@components/elements/Skeleton/PostSkeleton';
 
+import backgroundElement1 from '@assets/background-element-1.png';
+
 const Posts: React.FC = () => {
   const user = useTypedSelector(selectCurrentUser);
   const { data, isLoading } = useGetAllPostsQuery();
@@ -26,8 +28,12 @@ const Posts: React.FC = () => {
 
   return (
     <section id="posts-section" className="container mx-auto flex justify-center">
-      <div className="posts__context w-full md:max-w-4xl flex flex-col px-4 justify-center lg:border-x lg:border-gray-800 md:px-24 lg:px-16 xl:px-24">
-        <h1 className="posts__header text-3xl font-semibold text-white mt-32">Posts</h1>
+      <div className="fixed bottom-0 right-0 -z-10 rotate-180 opacity-30 xl:opacity-70">
+        <img src={backgroundElement1} alt="" width={200} />
+      </div>
+
+      <div className="posts__context flex w-full flex-col justify-center px-4 md:max-w-4xl md:px-24 lg:border-x lg:border-[#1c5c75a2] lg:px-16 xl:px-24">
+        <h1 className="posts__header mt-32 text-3xl font-semibold text-white">Posts</h1>
         <hr className="my-4 border-gray-800" />
 
         <PostTextarea name="post" isAuth={!!user} onAdd={({ text }) => onPostAdd(text)} />

@@ -88,9 +88,9 @@ const Navbar: React.FC = () => {
         {/* <SearchBar /> */}
 
         {!user ? (
-          <div className="flex flex-1 items-center justify-end">
+          <div className="mx-5 flex flex-1 items-center justify-end">
             <Button type="button" size="sm" to="/login">
-              Login
+              Sign in
             </Button>
           </div>
         ) : (
@@ -165,7 +165,7 @@ const Navbar: React.FC = () => {
                 ))}
               {user ? (
                 <NavLink
-                  to={'/posts'}
+                  to={location}
                   onClick={() => {
                     setIsNavbarOpen(false);
                     dispatch(logout());
