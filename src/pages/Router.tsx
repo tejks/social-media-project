@@ -1,24 +1,20 @@
-import { createBrowserRouter, Outlet } from 'react-router-dom';
+import { Outlet, createBrowserRouter } from 'react-router-dom';
 
+import ErrorPage from '@components/ErrorPage';
+import Navbar from '@components/Layout/Navbar/Navbar';
+
+import Post from '@pages/Posts/Post';
+import Posts from '@pages/Posts/Posts';
+
+import Photos from '@pages/Photos/Photos';
+import Albums from './Albums';
 import Home from './Home';
 import Login from './Login';
-import Posts from './Posts';
-import Albums from './Albums';
-import Photos from './Photos/Photos';
-import Footer from '../components/Footer';
-import Navbar from '../components/Navbar/Navbar';
-import ErrorPage from '../components/ErrorPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <>
-        <Navbar />
-        <Outlet />
-        <Footer />
-      </>
-    ),
+    element: <Outlet />,
     errorElement: <ErrorPage />,
     children: [
       {
@@ -27,15 +23,39 @@ const router = createBrowserRouter([
       },
       {
         path: '/login',
-        element: <Login />,
+        element: (
+          <>
+            <Navbar />
+            <Login />
+          </>
+        ),
       },
       {
         path: '/posts',
-        element: <Posts />,
+        element: (
+          <>
+            <Navbar />
+            <Posts />
+          </>
+        ),
+      },
+      {
+        path: '/posts/:id',
+        element: (
+          <>
+            <Navbar />
+            <Post />
+          </>
+        ),
       },
       {
         path: '/albums',
-        element: <Albums />,
+        element: (
+          <>
+            <Navbar />
+            <Albums />
+          </>
+        ),
       },
       {
         path: '/photos',

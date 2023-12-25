@@ -12,19 +12,19 @@ interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 function Checkbox({ id, className = '', labelValue = 'Check me', register, error, ...rest }: CheckboxProps) {
   return (
-    <div className="flex group items-center">
+    <div className="group flex items-center">
       <input
         id={id}
         type="checkbox"
-        className={clsx('w-4 h-4 border rounded bg-gray-50 accent-sky-800 cursor-pointer  float-left', className)}
+        className={clsx('float-left h-4 w-4 cursor-pointer rounded border bg-gray-50  accent-sky-800', className)}
         {...register}
         {...rest}
       />
-      <label htmlFor={id} className="text-sm font-medium text-white cursor-pointer ml-2 mb-0.25">
+      <label htmlFor={id} className="mb-0.25 ml-2 cursor-pointer text-sm font-medium text-white">
         {labelValue}
       </label>
       {error?.message && (
-        <div role="alert" aria-label={error.message} className="block text-xs font-semibold text-red-600 ml-2 mt-0.25">
+        <div role="alert" aria-label={error.message} className="ml-2 mt-0.25 block text-xs font-semibold text-red-600">
           {error.message}
         </div>
       )}

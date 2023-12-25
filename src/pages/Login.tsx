@@ -1,18 +1,20 @@
-import { useLoginMutation } from '../common/API/services/auth';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import React from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import Button from '../components/elements/Button';
-import Input from '../components/elements/Input';
+import { z } from 'zod';
 
-interface FormValues {
+import { useLoginMutation } from '@common/API/services/auth';
+
+import Button from '@components/elements/Button';
+import Input from '@components/elements/Input';
+
+type FormValues = {
   email: string;
   password: string;
-}
+};
 
 const Login: React.FC = () => {
-
   const validationSchema = z.object({
     email: z.string().min(1, 'Email is required').email('Invalid email format'),
     password: z.string().min(1, 'Password is required'),
@@ -24,28 +26,30 @@ const Login: React.FC = () => {
     formState: { errors },
   } = useForm<FormValues>({
     resolver: zodResolver(validationSchema),
-    mode: 'onChange', // set onTouched if onChange has too much impact on performance
+    mode: 'onChange',
   });
 
   const [login] = useLoginMutation();
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    login(data.email).then(() => navigate('/'));
-    console.log(data);
-  };
+  const onSubmit: SubmitHandler<FormValues> = ({ email }) => login(email).then(() => navigate(-1));
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <div className="w-full max-w-sm p-4 border rounded-xl sm:p-6 md:p-8 bg-gray-800 border-gray-700 shadow-2xl shadow-sky-400/50">
-        <form className="space-y-6" action="#" onSubmit={handleSubmit(onSubmit)}>
-          <h5 className="text-xl font-medium text-white text-center">Sign in to your account</h5>
+    <div className="flex h-screen flex-col items-center justify-center">
+      <div className="flex max-w-sm flex-col items-center rounded-xl p-4 shadow-2xl sm:p-6 md:p-8 lg:max-w-lg">
+        <h5 className="mb-12 text-center text-2xl font-medium text-white lg:text-4xl">
+          Sign in to your&nbsp;
+          <p className="inline-block bg-gradient-to-r from-[#FB9D1F] to-[#1C5C75] bg-clip-text  text-transparent">
+            Account
+          </p>
+        </h5>
+        <form className="space-y-6 lg:w-3/4" action="#" onSubmit={handleSubmit(onSubmit)}>
           <Input
             labelValue="Your email"
             type="email"
             id="email"
             defaultValue="Nathan@yesenia.net"
-            className="placeholder:text-slate-400 placeholder:italic mt-2 font-normal"
+            className="font-normal placeholder:italic placeholder:text-slate-400"
             placeholder="user@example.com"
             error={errors['email']}
             register={register('email')}
@@ -55,7 +59,7 @@ const Login: React.FC = () => {
             type="password"
             id="password"
             defaultValue="123"
-            className="placeholder:text-slate-400 mt-2"
+            className="placeholder:text-slate-400"
             placeholder="••••••••"
             error={errors['password']}
             register={register('password')}
@@ -67,7 +71,7 @@ const Login: React.FC = () => {
           </div>
           <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
             Don’t have an account yet?{' '}
-            <Link to={'/'} className="text-sky-500">
+            <Link to={'/'} className="text-[#FB9D1F]">
               Create account
             </Link>
           </div>

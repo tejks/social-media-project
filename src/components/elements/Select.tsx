@@ -17,9 +17,9 @@ function Select({ className = '', labelValue, options, register, error, ...rest 
   return (
     <FieldWrapper labelValue={labelValue} error={error}>
       <select
-        defaultValue={""}
+        defaultValue={''}
         className={clsx(
-          'border bg-gray-600 border-gray-500 placeholder-gray-400 text-white focus:ring-primary-600 focus:border-primary-600 text-sm rounded-lg block w-full p-2.5',
+          'focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-500 bg-gray-600 p-2.5 text-sm text-white placeholder-gray-400',
           className,
         )}
         {...register}

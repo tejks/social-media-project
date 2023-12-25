@@ -2,13 +2,13 @@ import clsx from 'clsx';
 import { useNavigate } from 'react-router-dom';
 
 const colors = {
-  primary: 'bg-sky-800 text-sky-200 hover:bg-sky-900',
-  inverse: 'text-sky-200 bg-sky-800',
+  primary: '',
+  outline: '',
 };
 
 const sizes = {
-  sm: 'py-2 px-4 text-sm font-medium',
-  md: 'py-3 px-6 text-sm font-medium',
+  sm: 'py-2 px-6 text-sm font-medium',
+  md: 'py-3 px-8 text-sm font-medium',
   lg: 'py-3 px-8 text-sm font-medium',
 };
 
@@ -24,7 +24,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 function Button({
   children,
   onClick,
-  color = 'primary',
+  // color = 'primary',
   size = 'sm',
   type = 'button',
   className = '',
@@ -37,8 +37,7 @@ function Button({
     <button
       type={type}
       className={clsx(
-        'inline-block ease-in duration-200 shadow-2xl hover:shadow-sky-300/50 rounded-2xl',
-        colors[color],
+        'inline-block rounded-3xl bg-gradient-to-r from-[#FB9D1F] to-[#1C5C75] font-bold text-white shadow-2xl duration-200 ease-in hover:shadow-sky-300/50',
         sizes[size],
         className,
       )}
