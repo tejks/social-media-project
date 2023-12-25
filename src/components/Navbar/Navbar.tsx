@@ -22,6 +22,7 @@ const Navbar: React.FC = () => {
     { name: 'Home', url: '/', isActive: true },
     { name: 'Posts', url: '/posts', isActive: false },
     { name: 'Albums', url: '/albums', isActive: false },
+    { name: 'Photos', url: '/photos', isActive: false },
   ]);
 
   useEffect(() => {
@@ -40,7 +41,7 @@ const Navbar: React.FC = () => {
   }, [location]);
 
   return (
-    <nav className="bg-gray-950 fixed w-screen">
+    <nav className="bg-gray-950 sticky w-full">
       <div className="flex justify-between p-5">
         <div className="flex flex-1 justify-start items-center">
           <a href="https://flowbite.com/">
