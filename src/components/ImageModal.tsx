@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { IUnsplashPhoto } from '../common/API/models/photo.model';
-import GalleryImage from '../pages/Photos/GalleryImage';
+import { IUnsplashPhoto } from '@common/API/models/photo.model';
+import GalleryImage from '@pages/Photos/GalleryImage';
 
 interface ModalProps {
   onClose: () => void;
@@ -50,7 +50,7 @@ function ImageModal({ onClose, imageData }: ModalProps) {
         tabIndex={-1}
         aria-hidden="true"
         className={clsx(
-          `fixed w-fit z-50 m-auto bg-slate-800 top-1/2 -translate-y-1/2 inset-x-0 sm:w-fit sm:rounded-lg sm:shadow`,
+          `fixed w-fit z-50 m-auto bg-[#081b22] top-1/2 -translate-y-1/2 inset-x-0 sm:w-fit sm:rounded-lg sm:shadow`,
           !isLoaded ? 'hidden' : 'block',
         )}
         onClick={(e) => {
@@ -71,7 +71,7 @@ function ImageModal({ onClose, imageData }: ModalProps) {
           </div>
           <button
             type="button"
-            className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+            className="text-gray-400 bg-transparent hover:bg-[#FB9D1F] hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
             data-modal-hide="default-modal"
             onClick={onClose}
           >
@@ -112,7 +112,7 @@ function ImageModal({ onClose, imageData }: ModalProps) {
         <div className="flex justify-center items-center">
           <button
             type="button"
-            className="group flex justify-center font-medium text-sm items-center py-2 hover:bg-[#b005052d] w-1/3 sm:w-1/6"
+            className="group flex justify-center font-medium text-sm items-center py-2 hover:bg-[#b005052d] w-1/3 sm:w-1/5"
           >
             <span className="relative flex flex-col items-center justify-center">
               <svg
@@ -136,7 +136,7 @@ function ImageModal({ onClose, imageData }: ModalProps) {
           </button>
           <button
             type="button"
-            className="group flex justify-center font-medium text-sm items-center py-2 hover:bg-[#0588b02d] w-1/3 sm:w-1/6"
+            className="group flex justify-center font-medium text-sm items-center py-2 hover:bg-[#0588b02d] w-1/3 sm:w-1/5"
           >
             <span className="relative flex flex-col items-center justify-center">
               <svg
@@ -160,7 +160,7 @@ function ImageModal({ onClose, imageData }: ModalProps) {
           </button>
           <button
             type="button"
-            className="group flex justify-center font-medium text-sm items-center py-2 hover:bg-[#05b0602d] w-1/3 sm:w-1/6"
+            className="group flex justify-center font-medium text-sm items-center py-2 hover:bg-[#05b0602d] w-1/3 sm:w-1/5"
           >
             <span className="relative flex flex-col items-center justify-center">
               <svg
