@@ -59,7 +59,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/photos',
-        element: <Photos />,
+        element: 
+        <>
+          <Navbar />
+          <Photos />,
+        </>
       },
     ],
   },
