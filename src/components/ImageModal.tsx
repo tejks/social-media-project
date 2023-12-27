@@ -15,7 +15,7 @@ function ImageModal({ onClose, imageData }: ModalProps) {
   return (
     <>
       <div
-        className="fixed inset-0 top-0 bottom-0 left-0 right-0 w-full h-full z-30 bg-black/50 backdrop-blur-sm transition-all duration-1000"
+        className="fixed inset-0 bottom-0 left-0 right-0 top-0 z-30 h-full w-full bg-black/50 backdrop-blur-sm transition-all duration-1000"
         onClick={() => {
           onClose();
         }}
@@ -24,11 +24,11 @@ function ImageModal({ onClose, imageData }: ModalProps) {
       {!isLoaded && (
         <div
           role="status"
-          className="fixed flex h-full justify-center items-center z-50 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          className="fixed left-1/2 top-1/2 z-50 flex h-full -translate-x-1/2 -translate-y-1/2 items-center justify-center"
         >
           <svg
             aria-hidden="true"
-            className="w-16 h-16 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+            className="h-16 w-16 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +50,7 @@ function ImageModal({ onClose, imageData }: ModalProps) {
         tabIndex={-1}
         aria-hidden="true"
         className={clsx(
-          `fixed w-fit z-50 m-auto bg-[#081b22] top-1/2 -translate-y-1/2 inset-x-0 sm:w-fit sm:rounded-lg sm:shadow`,
+          `fixed inset-x-0 top-1/2 z-50 m-auto w-fit -translate-y-1/2 bg-[#081b22] sm:w-fit sm:rounded-lg sm:shadow`,
           !isLoaded ? 'hidden' : 'block',
         )}
         onClick={(e) => {
@@ -60,18 +60,18 @@ function ImageModal({ onClose, imageData }: ModalProps) {
         {/* Header */}
         <header className="flex items-center justify-between px-2 py-1 sm:py-2 lg:py-3 2xl:p-4">
           <div className="max-w-[88%]">
-            <div className="sm:border-b-[1px] py-1 px-1 border-slate-500 text-xs 2xl:text-sm">
-              <p className="text-gray-200 capitalize font-semibold text-ellipsis overflow-hidden inline">
+            <div className="border-slate-500 px-1 py-1 text-xs sm:border-b-[1px] 2xl:text-sm">
+              <p className="inline overflow-hidden text-ellipsis font-semibold capitalize text-gray-200">
                 {imageData.user.name}{' '}
               </p>
               <Link to={imageData.user.links.html}>
-                <p className="text-gray-400 font-normal inline">@{imageData.user.username}</p>
+                <p className="inline font-normal text-gray-400">@{imageData.user.username}</p>
               </Link>
             </div>
           </div>
           <button
             type="button"
-            className="text-gray-400 bg-transparent hover:bg-[#FB9D1F] hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+            className="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-[#FB9D1F] hover:text-gray-900"
             data-modal-hide="default-modal"
             onClick={onClose}
           >
@@ -80,7 +80,7 @@ function ImageModal({ onClose, imageData }: ModalProps) {
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 14 14"
-              className="w-4 h-4"
+              className="h-4 w-4"
             >
               <path
                 stroke="currentColor"
@@ -95,9 +95,9 @@ function ImageModal({ onClose, imageData }: ModalProps) {
         </header>
 
         {/* Body - image */}
-        <div className="flex justify-center items-center flex-grow overflow-hidden">
+        <div className="flex flex-grow items-center justify-center overflow-hidden">
           {imageData !== null && (
-            <Link to={imageData.urls.raw} className="overflow-y-auto m-auto">
+            <Link to={imageData.urls.raw} className="m-auto overflow-y-auto">
               <GalleryImage
                 src={imageData.urls.regular}
                 alt={imageData.description}
@@ -109,10 +109,10 @@ function ImageModal({ onClose, imageData }: ModalProps) {
         </div>
 
         {/* Footer */}
-        <div className="flex justify-center items-center">
+        <div className="flex items-center justify-center">
           <button
             type="button"
-            className="group flex justify-center font-medium text-sm items-center py-2 hover:bg-[#b005052d] w-1/3 sm:w-1/5"
+            className="group flex w-1/3 items-center justify-center py-2 text-sm font-medium hover:bg-[#b005052d] sm:w-1/5"
           >
             <span className="relative flex flex-col items-center justify-center">
               <svg
@@ -121,7 +121,7 @@ function ImageModal({ onClose, imageData }: ModalProps) {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="#b00505"
-                className="w-4 h-4 md:w-5 md:h-5 2xl:w-6 2xl:h-6 group-hover:fill-[#b00505]"
+                className="h-4 w-4 group-hover:fill-[#b00505] md:h-5 md:w-5 2xl:h-6 2xl:w-6"
               >
                 <path
                   strokeLinecap="round"
@@ -129,14 +129,14 @@ function ImageModal({ onClose, imageData }: ModalProps) {
                   d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
                 />
               </svg>
-              <span className="text-gray-200 text-xs group-hover:text-[#b00505fb] group-hover:brightness-125">
+              <span className="text-xs text-gray-200 group-hover:text-[#b00505fb] group-hover:brightness-125">
                 {imageData.likes}
               </span>
             </span>
           </button>
           <button
             type="button"
-            className="group flex justify-center font-medium text-sm items-center py-2 hover:bg-[#0588b02d] w-1/3 sm:w-1/5"
+            className="group flex w-1/3 items-center justify-center py-2 text-sm font-medium hover:bg-[#0588b02d] sm:w-1/5"
           >
             <span className="relative flex flex-col items-center justify-center">
               <svg
@@ -145,7 +145,7 @@ function ImageModal({ onClose, imageData }: ModalProps) {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="#0588b0"
-                className="w-4 h-4 md:w-5 md:h-5 2xl:w-6 2xl:h-6 group-hover:fill-[#0588b0]"
+                className="h-4 w-4 group-hover:fill-[#0588b0] md:h-5 md:w-5 2xl:h-6 2xl:w-6"
               >
                 <path
                   strokeLinecap="round"
@@ -153,14 +153,14 @@ function ImageModal({ onClose, imageData }: ModalProps) {
                   d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"
                 />
               </svg>
-              <span className="text-gray-200 text-xs group-hover:text-[#0588b0] group-hover:brightness-125">
+              <span className="text-xs text-gray-200 group-hover:text-[#0588b0] group-hover:brightness-125">
                 {imageData.views}
               </span>
             </span>
           </button>
           <button
             type="button"
-            className="group flex justify-center font-medium text-sm items-center py-2 hover:bg-[#05b0602d] w-1/3 sm:w-1/5"
+            className="group flex w-1/3 items-center justify-center py-2 text-sm font-medium hover:bg-[#05b0602d] sm:w-1/5"
           >
             <span className="relative flex flex-col items-center justify-center">
               <svg
@@ -169,7 +169,7 @@ function ImageModal({ onClose, imageData }: ModalProps) {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-4 h-4 md:w-5 md:h-5 2xl:w-6 2xl:h-6 group-hover:fill-[#05b060] stroke-[#05b060]"
+                className="h-4 w-4 stroke-[#05b060] group-hover:fill-[#05b060] md:h-5 md:w-5 2xl:h-6 2xl:w-6"
               >
                 <path
                   strokeLinecap="round"
@@ -178,7 +178,7 @@ function ImageModal({ onClose, imageData }: ModalProps) {
                 />
               </svg>
 
-              <span className="text-gray-200 text-xs group-hover:text-[#05b060] group-hover:brightness-125">
+              <span className="text-xs text-gray-200 group-hover:text-[#05b060] group-hover:brightness-125">
                 {imageData.downloads}
               </span>
             </span>

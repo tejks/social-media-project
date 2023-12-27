@@ -13,7 +13,7 @@ export interface IUnsplashPhoto {
   views: number;
   description: string;
   slug: string;
-  sponsorship: string
+  sponsorship: string;
   exif: {
     make: string;
     model: string;
@@ -30,19 +30,18 @@ export interface IUnsplashPhoto {
     position: {
       latitude: number;
       longitude: number;
-    }
+    };
   };
 
-  current_user_collections:
-    {
-      id: number;
-      title: string;
-      published_at: string;
-      last_collected_at: string;
-      updated_at: string;
-      cover_photo: null;
-      user: null
-    }[];
+  current_user_collections: {
+    id: number;
+    title: string;
+    published_at: string;
+    last_collected_at: string;
+    updated_at: string;
+    cover_photo: null;
+    user: null;
+  }[];
 
   urls: {
     raw: string;
@@ -78,8 +77,8 @@ export interface IUnsplashPhoto {
       photos: string;
       likes: string;
       portfolio: string;
-    }
-  }
+    };
+  };
 }
 
 export interface GetAllPhotosResponse {

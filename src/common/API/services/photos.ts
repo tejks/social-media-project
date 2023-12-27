@@ -5,16 +5,13 @@ import { env } from '../../config/env';
 const clientId = process.env.UNSPLASH_ACCESS_KEY;
 
 export const photoApi = createApi({
-    reducerPath: 'photoApi',
-    baseQuery: fetchBaseQuery({ baseUrl: env.VITE_UNSPLASH_URL }),
-    endpoints: (builder) => ({
-        getRandomPhotos: builder.query<IUnsplashPhoto[], void>({
-            query: () => `/photos/random/?&client_id=${clientId}&count=30`
-        })
-        
+  reducerPath: 'photoApi',
+  baseQuery: fetchBaseQuery({ baseUrl: env.VITE_UNSPLASH_URL }),
+  endpoints: (builder) => ({
+    getRandomPhotos: builder.query<IUnsplashPhoto[], void>({
+      query: () => `/photos/random/?&client_id=${clientId}&count=30`,
+    }),
   }),
 });
 
-export const {
-    useGetRandomPhotosQuery,
-  } = photoApi;
+export const { useGetRandomPhotosQuery } = photoApi;

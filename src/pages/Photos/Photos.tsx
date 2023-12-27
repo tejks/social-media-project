@@ -32,7 +32,7 @@ const Photos: React.FC = () => {
       {isModalOpen === true && selectedImage !== null && <ImageModal onClose={closeModal} imageData={selectedImage} />}
       <section
         id="photos-section"
-        className="container mx-auto pt-32 px-4 columns-1 sm:columns-2 lg:columns-3 2xl:columns-4 sm:w-5/6 lg:w-4/5 2xl:w-3/4"
+        className="container mx-auto columns-1 px-4 pt-32 sm:w-5/6 sm:columns-2 lg:w-4/5 lg:columns-3 2xl:w-3/4 2xl:columns-4"
       >
         {photos && !isLoading
           ? photos?.map((item, index) => (
