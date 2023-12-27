@@ -1,8 +1,16 @@
 export interface IPost {
-  userId: number;
-  id: number;
+  id: string;
+  createdAt: string;
+  updatedAt: string;
   title: string;
-  body: string;
+  content: string;
+  published: boolean;
+  userId: string;
+}
+
+export interface CreatePostDto {
+  title: string;
+  content: string;
 }
 
 export interface GetAllPostsResponse {

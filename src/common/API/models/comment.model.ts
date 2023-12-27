@@ -1,9 +1,10 @@
 export interface IComment {
-  postId: number;
-  id: number;
-  name: string;
-  email: string;
-  body: string;
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  text: string;
+  userId: string;
+  postId: string;
 }
 
 export interface GetAllCommentsResponse {
