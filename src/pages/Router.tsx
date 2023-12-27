@@ -6,6 +6,7 @@ import Navbar from '@components/Layout/Navbar/Navbar';
 import Post from '@pages/Posts/Post';
 import Posts from '@pages/Posts/Posts';
 
+import Photos from '@pages/Photos/Photos';
 import Albums from './Albums';
 import Home from './Home';
 import Login from './Login';
@@ -55,6 +56,14 @@ const router = createBrowserRouter([
             <Albums />
           </>
         ),
+      },
+      {
+        path: '/photos',
+        element: 
+        <>
+          <Navbar />
+          <Photos />,
+        </>
       },
     ],
   },
