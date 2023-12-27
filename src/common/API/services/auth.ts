@@ -18,15 +18,15 @@ export const authApi = createApi({
         return response;
       },
     }),
-    signup: builder.mutation<any, string>({
-      query: () => ({
+    signup: builder.mutation<any, { email: string; password: string; firstName: string; lastName: string }>({
+      query: ({ email, password, firstName, lastName }) => ({
         url: 'auth/signup',
         method: 'POST',
         body: JSON.stringify({
-          email: 'szym@gmai.com',
-          password: '123123123',
-          firstName: 'Szymon',
-          lastName: 'Szymon',
+          email,
+          password,
+          firstName,
+          lastName,
         }),
       }),
       transformResponse: (response: any[]) => {
