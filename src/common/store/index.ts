@@ -3,6 +3,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 import { authApi } from '../API/services/auth';
 import { commentApi } from '../API/services/comment';
+import { photoApi } from '../API/services/photos';
 import { postApi } from '../API/services/post';
 
 import auth from './authSlice';
@@ -13,10 +14,11 @@ export const createStore = (options?: ConfigureStoreOptions['preloadedState'] | 
       [postApi.reducerPath]: postApi.reducer,
       [commentApi.reducerPath]: commentApi.reducer,
       [authApi.reducerPath]: authApi.reducer,
+      [photoApi.reducerPath]: photoApi.reducer,
       auth,
     },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(postApi.middleware, commentApi.middleware, authApi.middleware),
+      getDefaultMiddleware().concat(postApi.middleware, commentApi.middleware, authApi.middleware, photoApi.middleware),
     ...options,
   });
 
