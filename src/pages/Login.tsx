@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
 import { useSigninMutation } from '@/common/API/services/auth';
@@ -29,7 +29,9 @@ const Login: React.FC = () => {
   });
 
   const [signIn] = useSigninMutation();
-  const onSubmit: SubmitHandler<FormValues> = async ({ email, password }) => signIn({ email, password });
+  const navigate = useNavigate();
+  const onSubmit: SubmitHandler<FormValues> = async ({ email, password }) =>
+    signIn({ email, password }).then(() => navigate(-1));
 
   return (
     <div className="flex h-screen flex-col items-center justify-center">
@@ -45,7 +47,7 @@ const Login: React.FC = () => {
             labelValue="Your email"
             type="email"
             id="email"
-            defaultValue="Nathan@yesenia.net"
+            defaultValue="szymon@gmail.com"
             className="font-normal placeholder:italic placeholder:text-slate-400"
             placeholder="user@example.com"
             error={errors['email']}
@@ -55,7 +57,7 @@ const Login: React.FC = () => {
             labelValue="Password"
             type="password"
             id="password"
-            defaultValue="123"
+            defaultValue="123123123"
             className="placeholder:text-slate-400"
             placeholder="••••••••"
             error={errors['password']}

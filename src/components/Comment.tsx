@@ -1,20 +1,33 @@
 import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 
-import Dropdown from './Dropdown';
+import Dropdown, { IDropdownOption } from './Dropdown';
 
 import { IComment } from '@common/API/models/comment.model';
 
 interface CommentProps {
   comment: IComment;
   commentId: number;
+  onCommentDelete: (id: string) => void;
 }
 
-const Comment: React.FC<CommentProps> = ({ commentId, comment }) => {
-  const dropdownOptions = [
-    { label: 'Report', location: '/' },
+const Comment: React.FC<CommentProps> = ({ commentId, comment, onCommentDelete }) => {
+  const dropdownOptions: IDropdownOption[] = [
+    {
+      label: 'Report',
+      location: '/',
+    },
     { label: 'Edit', location: '/', requiredOwner: true },
-    { label: 'Delete', location: '/', color: 'text-red-600', requiredOwner: true },
+    {
+      label: 'Delete',
+      location: '/',
+      color: 'text-red-600',
+      requiredOwner: true,
+      dropdownEvent() {
+        onCommentDelete(comment.id);
+        setIsDropdownOpen(false);
+      },
+    },
   ];
 
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -44,7 +57,7 @@ const Comment: React.FC<CommentProps> = ({ commentId, comment }) => {
               src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
               alt="Michael Gough"
             />
-            {comment.email.toLocaleLowerCase().split('@')[0]}
+            {"comment.email.toLocaleLowerCase().split('@')[0]"}
           </p>
         </div>
 
@@ -70,7 +83,7 @@ const Comment: React.FC<CommentProps> = ({ commentId, comment }) => {
         <Dropdown isOpen={isDropdownOpen} options={dropdownOptions} ref={dropdownRef} />
       </footer>
 
-      <p className="text-gray-500 dark:text-gray-400">{comment.body}</p>
+      <p className="text-gray-500 dark:text-gray-400">{comment.text}</p>
 
       {/* <div className="mt-4 flex items-center space-x-4">
         <button type="button" className="flex items-center text-sm font-medium text-gray-400 hover:underline">

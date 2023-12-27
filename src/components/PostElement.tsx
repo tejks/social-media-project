@@ -68,7 +68,7 @@ const PostElement: React.FC<PostElementProps> = ({ post, route = true }) => {
             </div>
           </div>
 
-          <p className="mt-3 text-gray-100">{post.body}</p>
+          <p className="mt-3 text-gray-100">{post.content}</p>
         </div>
         <div className="mt-3 flex items-center sm:mt-6">
           <div className="mr-3 flex cursor-pointer text-sm text-gray-400 sm:mr-4">

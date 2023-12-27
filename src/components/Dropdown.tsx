@@ -6,9 +6,10 @@ interface DropdownProps {
   options: IDropdownOption[];
 }
 
-interface IDropdownOption {
+export interface IDropdownOption {
   label: string;
   color?: string;
+  location?: string;
   requiredOwner?: boolean;
   dropdownEvent?: () => void;
 }
@@ -24,8 +25,13 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(({ options, isOpen },
       )}
     >
       <ul className="py-1.5 text-sm text-gray-200" aria-labelledby="dropdownDefaultButton">
-        {options.map(({ label, color }, index) => (
-          <li key={index}>
+        {options.map(({ label, color, dropdownEvent }, index) => (
+          <li
+            key={index}
+            onClick={() => {
+              if (dropdownEvent) dropdownEvent();
+            }}
+          >
             <p
               className={clsx(
                 'block cursor-pointer px-4 py-1.5 hover:bg-gray-600 hover:text-white',
