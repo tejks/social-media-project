@@ -30,7 +30,10 @@ const AddElementWithTextarea: React.FC<AddElementWithTextareaProps> = ({ isAuth,
         ></textarea>
       </div>
       <div className="flex">
-        <Button type="button" onClick={() => onAdd({ text: textareaValue })}>
+        <Button type="button" onClick={() => {
+          setTextareaValue('')
+          onAdd({ text: textareaValue })
+        }}>
           {`Add ${name}`}
         </Button>
         <IconButton className="ml-4">
