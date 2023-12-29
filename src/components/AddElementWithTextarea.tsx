@@ -13,6 +13,14 @@ interface AddElementWithTextareaProps {
 const AddElementWithTextarea: React.FC<AddElementWithTextareaProps> = ({ isAuth, onAdd, name }) => {
   const [textareaValue, setTextareaValue] = useState('');
 
+  const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      setTextareaValue('');
+      onAdd({ text: textareaValue });
+    }
+  };
+
   const context = (
     <div className={clsx(!isAuth ? 'opacity-80 blur-sm' : '')}>
       <div className="mb-4 rounded-lg rounded-t-lg border border-gray-200 bg-white px-4 py-2 dark:border-gray-700 dark:bg-gray-800">
@@ -27,13 +35,17 @@ const AddElementWithTextarea: React.FC<AddElementWithTextareaProps> = ({ isAuth,
           required
           value={textareaValue}
           onChange={(e) => setTextareaValue(e.target.value)}
+          onKeyDown={onKeyDown}
         ></textarea>
       </div>
       <div className="flex">
-        <Button type="button" onClick={() => {
-          setTextareaValue('')
-          onAdd({ text: textareaValue })
-        }}>
+        <Button
+          type="button"
+          onClick={() => {
+            setTextareaValue('');
+            onAdd({ text: textareaValue });
+          }}
+        >
           {`Add ${name}`}
         </Button>
         <IconButton className="ml-4">
