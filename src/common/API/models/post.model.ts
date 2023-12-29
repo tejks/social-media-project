@@ -2,10 +2,11 @@ export interface IPost {
   id: string;
   createdAt: string;
   updatedAt: string;
-  title: string;
   content: string;
-  published: boolean;
   userId: string;
+  _count: {
+    PostLike: number;
+  }
 }
 
 export interface CreatePostDto {
