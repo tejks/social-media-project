@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '.';
-import { IUser } from '../API/models/user.model';
+import { AuthUser } from '../API/models/user.model';
 import { authApi } from '../API/services/auth';
 
 const authSlice = createSlice({
   name: 'auth',
   initialState: { user: null, token: null } as {
-    user: IUser | null;
+    user: AuthUser | null;
     token: null | string;
   },
   reducers: {},

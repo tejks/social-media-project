@@ -21,10 +21,6 @@ export const postApi = createApi({
         method: 'POST',
         body,
       }),
-      transformResponse: (response: IPost) => {
-        console.log(response);
-        return response;
-      },
     }),
     deletePost: builder.mutation<IPost, number>({
       query: (id) => ({
@@ -39,6 +35,13 @@ export const postApi = createApi({
         body: patch,
       }),
     }),
+    likePost: builder.mutation<IPost, string>({
+      query: (id) => ({
+        url: `likes/post`,
+        method: 'POST',
+        body: { postId: id },
+      }),
+    }),
   }),
 });
 
@@ -49,4 +52,5 @@ export const {
   useCreatePostMutation,
   useDeletePostMutation,
   useUpdatePostMutation,
+  useLikePostMutation,
 } = postApi;
