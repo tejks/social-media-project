@@ -38,7 +38,7 @@ const GalleryImage = forwardRef<HTMLImageElement, ImageProps>(
         )}
 
         <img
-          className={clsx('cursor-zoom-in', isLoaded ? 'inline' : 'hidden', className)}
+          className={clsx('cursor-pointer', isLoaded ? 'inline' : 'hidden', className)}
           ref={ref}
           src={src}
           alt={alt}

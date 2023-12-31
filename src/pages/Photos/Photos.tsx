@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import GalleryImage from './GalleryImage';
 import { IUnsplashPhoto } from '@common/API/models/photo.model';
 import { useGetRandomPhotosQuery } from '@common/API/services/photos';
-import ScrollToTop from '@components/ScrollToTop';
 import ImageModal from '@components/ImageModal';
+import ScrollToTop from '@components/ScrollToTop';
 import ImageSkeleton from '@components/elements/Skeleton/ImageSkeleton';
+import { useEffect, useState } from 'react';
+import GalleryImage from './GalleryImage';
 
 const Photos: React.FC = () => {
   const { data, isLoading } = useGetRandomPhotosQuery();
@@ -24,7 +24,6 @@ const Photos: React.FC = () => {
 
   useEffect(() => {
     if (data) setPhotos(data);
-    console.log('updated');
   }, [data]);
 
   return (
