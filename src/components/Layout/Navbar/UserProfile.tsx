@@ -5,12 +5,11 @@ import { Link, useLocation } from 'react-router-dom';
 import { useSignoutMutation } from '@/common/API/services/auth';
 
 interface UserProfileProps {
-  name: string;
   email: string;
   isMobile?: boolean;
 }
 
-const UserProfile: React.FC<UserProfileProps> = ({ email, name, isMobile }: UserProfileProps) => {
+const UserProfile: React.FC<UserProfileProps> = ({ email, isMobile }: UserProfileProps) => {
   const [signOut] = useSignoutMutation();
   const location = useLocation();
 
@@ -72,7 +71,6 @@ const UserProfile: React.FC<UserProfileProps> = ({ email, name, isMobile }: User
             ref={dropdownRef}
           >
             <div className="px-4 py-3">
-              <span className="block text-sm text-white">{name}</span>
               <span className="block truncate text-sm text-gray-400">{email}</span>
             </div>
             <ul className="py-2" aria-labelledby="user-menu-button">

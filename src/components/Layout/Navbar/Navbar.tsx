@@ -89,7 +89,7 @@ const Navbar: React.FC = () => {
             </Button>
           </div>
         ) : (
-          <UserProfile name={user.name} email={user.email} />
+          <UserProfile email={user.email} />
         )}
       </div>
 
@@ -135,9 +135,7 @@ const Navbar: React.FC = () => {
           )}
         >
           <nav className="h-1/2">
-            <div className="flex justify-center">
-              {user ? <UserProfile name={user.name} email={user.email} isMobile={true} /> : ''}
-            </div>
+            <div className="flex justify-center">{user ? <UserProfile email={user.email} isMobile={true} /> : ''}</div>
             <ul className="mt-5 flex h-3/4 flex-col items-center justify-evenly">
               {navbarMenu
                 .filter((element) => !(element.name === 'Sign in' && user))
