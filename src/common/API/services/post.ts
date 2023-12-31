@@ -42,6 +42,12 @@ export const postApi = createApi({
         body: { postId: id },
       }),
     }),
+    unlikePost: builder.mutation<IPost, string>({
+      query: (id) => ({
+        url: `likes/post/${id}`,
+        method: 'DELETE',
+      }),
+    }),
   }),
 });
 
@@ -53,4 +59,5 @@ export const {
   useDeletePostMutation,
   useUpdatePostMutation,
   useLikePostMutation,
+  useUnlikePostMutation,
 } = postApi;
