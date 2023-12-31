@@ -4,9 +4,13 @@ export interface IPost {
   updatedAt: string;
   content: string;
   userId: string;
-  _count: {
-    PostLike: number;
-  }
+  likes: number;
+  isLiked: boolean;
+  comments: number;
+  user: {
+    username: string;
+    id: string;
+  };
 }
 
 export interface CreatePostDto {

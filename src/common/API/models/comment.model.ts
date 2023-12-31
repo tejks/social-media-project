@@ -7,7 +7,7 @@ export interface IComment {
   postId: string;
   User: {
     username: string;
-  }
+  };
 }
 
 export interface GetAllCommentsResponse {
