@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { useCreatePostMutation, useGetAllPostsQuery } from '@common/API/services/post';
 import { useTypedSelector } from '@common/store';
 import { selectCurrentUser } from '@common/store/authSlice';
@@ -10,15 +12,14 @@ import PostSkeleton from '@components/elements/Skeleton/PostSkeleton';
 import backgroundElement1 from '@assets/background-element-1.png';
 
 const Posts: React.FC = () => {
-  const user = useTypedSelector(selectCurrentUser);
+  const currentUser = useTypedSelector(selectCurrentUser);
 
-  const { data: posts, isLoading, refetch } = useGetAllPostsQuery();
+  const { data: posts, isLoading: isPostsLoading, refetch } = useGetAllPostsQuery();
   const [createPost] = useCreatePostMutation();
 
   const onPostCreate = async (text: string) => {
     try {
       await createPost({
-        title: 'Title',
         content: text,
       });
 
@@ -27,6 +28,10 @@ const Posts: React.FC = () => {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    refetch();
+  }, [currentUser, refetch]);
 
   return (
     <section id="posts-section" className="container mx-auto flex justify-center">
@@ -38,11 +43,11 @@ const Posts: React.FC = () => {
         <h1 className="posts__header mt-32 text-3xl font-semibold text-white">Posts</h1>
         <hr className="my-4 border-gray-800" />
 
-        <PostTextarea name="post" isAuth={!!user} onAdd={({ text }) => onPostCreate(text)} />
+        <PostTextarea name="post" isAuth={!!currentUser} onAdd={({ text }) => onPostCreate(text)} />
 
         <div className="posts__posts-list flex flex-col justify-center">
-          {posts && !isLoading
-            ? posts.map((post) => <PostElement key={post.id} post={post} />)
+          {posts && !isPostsLoading
+            ? posts.map((post) => <PostElement key={post.id} post={post} isAuth={!!currentUser} />)
             : Array.from(Array(10).keys()).map((_, index) => <PostSkeleton key={index} />)}
         </div>
       </div>

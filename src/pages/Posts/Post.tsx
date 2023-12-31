@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useGetCommentsByPostIdQuery, useGetPostQuery } from '@common/API/services/post';
@@ -16,9 +16,9 @@ type PostRouteParams = {
 
 const Post: React.FC = () => {
   const navigate = useNavigate();
-  const user = useTypedSelector(selectCurrentUser);
+  const currentUser = useTypedSelector(selectCurrentUser);
   const { id } = useParams<PostRouteParams>();
-  const { data: post, isLoading: isPostLoading } = useGetPostQuery(id as string);
+  const { data: post, isLoading: isPostLoading, refetch: refetchPost } = useGetPostQuery(id as string);
   const {
     data: comments,
     isLoading: isCommentsLoading,
@@ -28,6 +28,10 @@ const Post: React.FC = () => {
   const [createComment] = useCreateCommentMutation();
   const [deleteComment] = useDeleteCommentMutation();
 
+  useEffect(() => {
+    refetchPost();
+  }, [post, refetchPost]);
+
   if (isPostLoading && isCommentsLoading) return 'Loading...';
   if (!post) return 'Post not found';
 
@@ -35,9 +39,9 @@ const Post: React.FC = () => {
     try {
       await createComment({
         postId: post.id,
-        text,
+        content: text,
       });
-      refreshComments();
+      Promise.all([refetchPost(), refreshComments()]);
     } catch (error) {
       console.error(error);
     }
@@ -46,7 +50,7 @@ const Post: React.FC = () => {
   const onCommentDelete = async (id: string) => {
     try {
       await deleteComment(id);
-      refreshComments();
+      Promise.all([refetchPost(), refreshComments()]);
     } catch (error) {
       console.error(error);
     }
@@ -77,15 +81,21 @@ const Post: React.FC = () => {
         </div>
 
         <div className="post__post-box mt-40 flex flex-col justify-center">
-          <PostElement post={post} route={false} />
+          <PostElement post={post} route={false} isAuth={!!currentUser} />
         </div>
 
         <section className="py-10 antialiased">
           <div className="mx-auto max-w-2xl px-4">
-            <AddElementWithTextarea name="comment" isAuth={!!user} onAdd={({ text }) => onCommentCreate(text)} />
+            <AddElementWithTextarea name="comment" isAuth={!!currentUser} onAdd={({ text }) => onCommentCreate(text)} />
 
             {comments?.map((comment, index) => (
-              <Comment commentId={index} comment={comment} onCommentDelete={(id) => onCommentDelete(id)} />
+              <Comment
+                key={index}
+                commentId={index}
+                comment={comment}
+                onCommentDelete={(id) => onCommentDelete(id)}
+                authUserId={currentUser?.userId}
+              />
             ))}
           </div>
         </section>
