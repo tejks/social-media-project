@@ -3,6 +3,7 @@ import { forwardRef } from 'react';
 
 interface DropdownProps {
   isOpen: boolean;
+  isOwner: boolean;
   options: IDropdownOption[];
 }
 
@@ -14,7 +15,7 @@ export interface IDropdownOption {
   dropdownEvent?: () => void;
 }
 
-const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(({ options, isOpen }, ref) => {
+const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(({ options, isOpen, isOwner }, ref) => {
   return (
     <div
       id="dropdown"
@@ -25,7 +26,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(({ options, isOpen },
       )}
     >
       <ul className="py-1.5 text-sm text-gray-200" aria-labelledby="dropdownDefaultButton">
-        {options.map(({ label, color, dropdownEvent }, index) => (
+        {options.filter(e => !e.requiredOwner || isOwner).map(({ label, color, dropdownEvent }, index) => (
           <li
             key={index}
             onClick={() => {

@@ -8,16 +8,16 @@ import { IComment } from '@common/API/models/comment.model';
 interface CommentProps {
   comment: IComment;
   commentId: number;
+  authUserId?: string;
   onCommentDelete: (id: string) => void;
 }
 
-const Comment: React.FC<CommentProps> = ({ commentId, comment, onCommentDelete }) => {
+const Comment: React.FC<CommentProps> = ({ commentId, comment, onCommentDelete, authUserId }) => {
   const dropdownOptions: IDropdownOption[] = [
     {
       label: 'Report',
       location: '/',
     },
-    { label: 'Edit', location: '/', requiredOwner: true },
     {
       label: 'Delete',
       location: '/',
@@ -48,7 +48,7 @@ const Comment: React.FC<CommentProps> = ({ commentId, comment, onCommentDelete }
   });
 
   return (
-    <article key={commentId} className={clsx('py-3 text-sm sm:p-6', commentId != 0 ? 'border-t  border-gray-800' : '')}>
+    <article className={clsx('py-3 text-sm sm:p-6', commentId != 0 ? 'border-t  border-gray-800' : '')}>
       <footer className="relative mb-2 flex items-center justify-between">
         <div className="flex items-center">
           <p className="text-md mr-3 inline-flex items-center font-semibold text-gray-900 dark:text-white">
@@ -57,7 +57,7 @@ const Comment: React.FC<CommentProps> = ({ commentId, comment, onCommentDelete }
               src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
               alt="Michael Gough"
             />
-            {"comment.email.toLocaleLowerCase().split('@')[0]"}
+            {comment.User.username}
           </p>
         </div>
 
@@ -80,10 +80,15 @@ const Comment: React.FC<CommentProps> = ({ commentId, comment, onCommentDelete }
           <span className="sr-only">Comment settings</span>
         </button>
 
-        <Dropdown isOpen={isDropdownOpen} options={dropdownOptions} ref={dropdownRef} />
+        <Dropdown
+          isOpen={isDropdownOpen}
+          options={dropdownOptions}
+          ref={dropdownRef}
+          isOwner={authUserId ? (authUserId == comment.userId ? true : false) : false}
+        />
       </footer>
 
-      <p className="text-gray-500 dark:text-gray-400">{comment.text}</p>
+      <p className="text-gray-500 dark:text-gray-400">{comment.content}</p>
 
       {/* <div className="mt-4 flex items-center space-x-4">
         <button type="button" className="flex items-center text-sm font-medium text-gray-400 hover:underline">
