@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useGetCommentsByPostIdQuery, useGetPostQuery } from '@common/API/services/post';
+import { useDeletePostMutation, useGetCommentsByPostIdQuery, useGetPostQuery } from '@common/API/services/post';
 import { useTypedSelector } from '@common/store';
 import { selectCurrentUser } from '@common/store/authSlice';
 
@@ -10,14 +10,18 @@ import PostElement from '@/components/PostElement';
 import AddElementWithTextarea from '@components/AddElementWithTextarea';
 import Comment from '@components/Comment';
 
+import backgroundElement1 from '@assets/background-element-1.png';
+
 type PostRouteParams = {
   id: string;
 };
 
 const Post: React.FC = () => {
-  const navigate = useNavigate();
-  const currentUser = useTypedSelector(selectCurrentUser);
   const { id } = useParams<PostRouteParams>();
+  const navigate = useNavigate();
+
+  const currentUser = useTypedSelector(selectCurrentUser);
+
   const { data: post, isLoading: isPostLoading, refetch: refetchPost } = useGetPostQuery(id as string);
   const {
     data: comments,
@@ -27,18 +31,16 @@ const Post: React.FC = () => {
 
   const [createComment] = useCreateCommentMutation();
   const [deleteComment] = useDeleteCommentMutation();
+  const [deletePost] = useDeletePostMutation();
 
   useEffect(() => {
     refetchPost();
-  }, [post, refetchPost]);
+  }, [post, currentUser, refetchPost]);
 
-  if (isPostLoading && isCommentsLoading) return 'Loading...';
-  if (!post) return 'Post not found';
-
-  const onCommentCreate = async (text: string) => {
+  const onCommentCreate = async (id: string, text: string) => {
     try {
       await createComment({
-        postId: post.id,
+        postId: id,
         content: text,
       });
       Promise.all([refetchPost(), refreshComments()]);
@@ -56,11 +58,27 @@ const Post: React.FC = () => {
     }
   };
 
+  const onPostDelete = async (id: string) => {
+    try {
+      await deletePost(id);
+      navigate('/posts');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  if (isPostLoading && isCommentsLoading) return 'Loading...';
+  if (!post || !comments) return 'Post not found';
+
   return (
     <section className="container mx-auto flex justify-center">
+      <div className="fixed bottom-0 right-0 -z-10 rotate-180 opacity-30 xl:opacity-70">
+        <img src={backgroundElement1} alt="" width={200} />
+      </div>
+
       <div className="relative z-10 flex w-full flex-col justify-center px-4 md:max-w-4xl md:px-24 lg:px-24 xl:px-24">
         <div
-          className="absolute left-6 hidden h-11 w-11 cursor-pointer items-center justify-center rounded-full text-white hover:text-[#FB9D1F] md:top-40 md:flex "
+          className="absolute left-6 hidden h-11 w-11 cursor-pointer items-center justify-center rounded-full text-white hover:text-[#FB9D1F] md:top-48 md:flex "
           onClick={() => navigate(-1)}
         >
           <svg
@@ -81,14 +99,18 @@ const Post: React.FC = () => {
         </div>
 
         <div className="post__post-box mt-40 flex flex-col justify-center">
-          <PostElement post={post} route={false} isAuth={!!currentUser} />
+          <PostElement post={post} route={false} auth={currentUser} onPostDelete={onPostDelete} />
         </div>
 
         <section className="py-10 antialiased">
           <div className="mx-auto max-w-2xl px-4">
-            <AddElementWithTextarea name="comment" isAuth={!!currentUser} onAdd={({ text }) => onCommentCreate(text)} />
+            <AddElementWithTextarea
+              name="comment"
+              isAuth={!!currentUser}
+              onAdd={({ text }) => onCommentCreate(post.id, text)}
+            />
 
-            {comments?.map((comment, index) => (
+            {comments.map((comment, index) => (
               <Comment
                 key={index}
                 commentId={index}

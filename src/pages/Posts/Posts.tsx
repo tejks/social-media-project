@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import { useCreatePostMutation, useGetAllPostsQuery } from '@common/API/services/post';
 import { useTypedSelector } from '@common/store';
 import { selectCurrentUser } from '@common/store/authSlice';
@@ -10,11 +8,18 @@ import ScrollToTop from '@components/ScrollToTop';
 import PostSkeleton from '@components/elements/Skeleton/PostSkeleton';
 
 import backgroundElement1 from '@assets/background-element-1.png';
+import { useEffect } from 'react';
 
 const Posts: React.FC = () => {
   const currentUser = useTypedSelector(selectCurrentUser);
 
-  const { data: posts, isLoading: isPostsLoading, refetch } = useGetAllPostsQuery();
+  const {
+    data: posts,
+    isLoading: isPostsLoading,
+    refetch,
+  } = useGetAllPostsQuery(undefined, {
+    pollingInterval: 10000,
+  });
   const [createPost] = useCreatePostMutation();
 
   const onPostCreate = async (text: string) => {
@@ -47,7 +52,7 @@ const Posts: React.FC = () => {
 
         <div className="posts__posts-list flex flex-col justify-center">
           {posts && !isPostsLoading
-            ? posts.map((post) => <PostElement key={post.id} post={post} isAuth={!!currentUser} />)
+            ? posts.map((post) => <PostElement key={post.id} post={post} auth={currentUser} />)
             : Array.from(Array(10).keys()).map((_, index) => <PostSkeleton key={index} />)}
         </div>
       </div>

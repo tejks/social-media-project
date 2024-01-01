@@ -8,6 +8,10 @@ export const postApi = createApi({
   endpoints: (builder) => ({
     getPost: builder.query<IPost, string>({
       query: (id) => `posts/${id}`,
+      transformResponse: (response: IPost) => {
+        console.log(response);
+        return response;
+      },
     }),
     getAllPosts: builder.query<IPost[], void>({
       query: () => `posts`,
@@ -22,7 +26,7 @@ export const postApi = createApi({
         body,
       }),
     }),
-    deletePost: builder.mutation<IPost, number>({
+    deletePost: builder.mutation<IPost, string>({
       query: (id) => ({
         url: `posts/${id}`,
         method: 'DELETE',

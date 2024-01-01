@@ -1,17 +1,20 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { AuthUser } from '@/common/API/models/user.model';
 import { useLikePostMutation, useUnlikePostMutation } from '@/common/API/services/post';
 import { IPost } from '@common/API/models/post.model';
 import clsx from 'clsx';
+import Dropdown, { IDropdownOption } from './Dropdown';
 
 interface PostElementProps {
   post: IPost;
-  isAuth: boolean;
+  auth: AuthUser | null;
+  onPostDelete?: (id: string) => void;
   route?: boolean;
 }
 
-const PostElement: React.FC<PostElementProps> = ({ post, route = true, isAuth }) => {
+const PostElement: React.FC<PostElementProps> = ({ post, route = true, auth, onPostDelete }) => {
   const navigate = useNavigate();
 
   const [isLiked, setIsLiked] = useState(false);
@@ -37,7 +40,7 @@ const PostElement: React.FC<PostElementProps> = ({ post, route = true, isAuth })
   }, []);
 
   function onLikeClick() {
-    if (!isAuth) return navigate('/login');
+    if (!auth) return navigate('/login');
 
     if (isLiked) {
       setNumberOfLikes(numberOfLikes - 1);
@@ -65,8 +68,42 @@ const PostElement: React.FC<PostElementProps> = ({ post, route = true, isAuth })
     });
   }
 
+  const dropdownOptions: IDropdownOption[] = [
+    {
+      label: 'Report',
+      location: '/',
+    },
+    {
+      label: 'Delete',
+      location: '/',
+      color: 'text-red-600',
+      requiredOwner: true,
+      dropdownEvent() {
+        onPostDelete ? onPostDelete(post.id) : null;
+        setIsDropdownOpen(false);
+      },
+    },
+  ];
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    const handler = (event: MouseEvent) => {
+      if (!dropdownRef.current?.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handler);
+
+    return () => {
+      document.removeEventListener('mousedown', handler);
+    };
+  });
+
   return (
-    <div className="post-element__context my-4 grid grid-cols-10 gap-3 rounded-lg border border-[#1c5c7585] bg-[#1c5c7521] px-3 py-4 text-sm shadow sm:gap-4 sm:px-4 sm:py-4">
+    <div className="post-element__context my-4 grid grid-cols-10 gap-3 rounded-lg border border-[#1c5c7585] bg-[#1c5c7521] px-3 py-4 text-sm shadow sm:gap-4 sm:px-4 sm:py-4 lg:text-base">
       <div className="post-element__image-box hidden justify-center sm:col-start-1 sm:col-end-1 sm:flex">
         <img
           className="h-8 w-8 rounded-full object-cover shadow sm:h-12 sm:w-12"
@@ -88,16 +125,17 @@ const PostElement: React.FC<PostElementProps> = ({ post, route = true, isAuth })
               <p className="text-gray-400">{getFullDate(new Date(post.createdAt))}</p>
             </div>
 
-            <div className="post-element__dropdown flex items-center">
-              {/* <button
+            {!route ? (
+              <div className="post-element__dropdown ml-auto flex items-center">
+                <button
                   id="dropdownComment1Button"
                   data-dropdown-toggle="dropdownComment1"
-                  className="items-center p-2 text-sm font-medium text-center text-gray-400 rounded-lg  hover:bg-gray-700 "
+                  className="items-center rounded-lg p-2 text-center text-sm font-medium text-gray-400  hover:bg-gray-700 "
                   type="button"
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 >
                   <svg
-                    className="w-4 h-4"
+                    className="h-4 w-4"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
@@ -107,8 +145,14 @@ const PostElement: React.FC<PostElementProps> = ({ post, route = true, isAuth })
                   </svg>
                   <span className="sr-only">Comment settings</span>
                 </button>
-                <Dropdown isOpen={isDropdownOpen} options={dropdownOptions} ref={dropdownRef} /> */}
-            </div>
+                <Dropdown
+                  isOpen={isDropdownOpen}
+                  options={dropdownOptions}
+                  ref={dropdownRef}
+                  isOwner={auth ? (auth.userId == post.userId ? true : false) : false}
+                />
+              </div>
+            ) : null}
           </div>
 
           <div className="mt-3 overflow-hidden text-gray-100">{post.content}</div>
