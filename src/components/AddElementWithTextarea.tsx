@@ -1,5 +1,6 @@
 import clsx from 'clsx';
-import { useState } from 'react';
+import EmojiPicker, { Theme } from 'emoji-picker-react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from './elements/Button';
 import IconButton from './elements/IconButton';
@@ -21,6 +22,23 @@ const AddElementWithTextarea: React.FC<AddElementWithTextareaProps> = ({ isAuth,
     }
   };
 
+  const emojiPickerRef = useRef<HTMLDivElement>(null);
+  const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
+
+  useEffect(() => {
+    const handler = (event: MouseEvent) => {
+      if (!emojiPickerRef.current?.contains(event.target as Node)) {
+        setIsEmojiPickerOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handler);
+
+    return () => {
+      document.removeEventListener('mousedown', handler);
+    };
+  });
+
   const context = (
     <div className={clsx(!isAuth ? 'opacity-80 blur-sm' : '')}>
       <div className="mb-4 rounded-lg rounded-t-lg border border-gray-200 bg-white px-4 py-2 dark:border-gray-700 dark:bg-gray-800">
@@ -30,7 +48,7 @@ const AddElementWithTextarea: React.FC<AddElementWithTextareaProps> = ({ isAuth,
         <textarea
           id={name}
           rows={3}
-          className="w-full border-0 px-0 text-sm text-gray-900 focus:outline-none focus:ring-0 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
+          className="w-full border-0 px-0 text-sm text-gray-900 focus:outline-none focus:ring-0 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 lg:text-base"
           placeholder={`Write a ${name}...`}
           required
           value={textareaValue}
@@ -76,7 +94,7 @@ const AddElementWithTextarea: React.FC<AddElementWithTextareaProps> = ({ isAuth,
             />
           </svg>
         </IconButton>
-        <IconButton>
+        <IconButton onClick={() => setIsEmojiPickerOpen(!isEmojiPickerOpen)}>
           <svg
             className="h-5 w-5"
             aria-hidden="true"
@@ -94,6 +112,19 @@ const AddElementWithTextarea: React.FC<AddElementWithTextareaProps> = ({ isAuth,
           </svg>
         </IconButton>
       </div>
+      {isEmojiPickerOpen ? (
+        <div ref={emojiPickerRef} className="relative">
+          <EmojiPicker
+            theme={Theme.DARK}
+            onEmojiClick={(data) => {
+              setTextareaValue(textareaValue + data.emoji);
+              setIsEmojiPickerOpen(false);
+            }}
+            skinTonesDisabled={true}
+            style={{ position: 'absolute', top: '-20px', right: '50px', zIndex: 100 }}
+          />
+        </div>
+      ) : null}
     </div>
   );
   return (
