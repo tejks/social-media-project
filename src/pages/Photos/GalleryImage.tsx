@@ -6,22 +6,22 @@ interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   src: string;
   alt: string;
   hash?: string;
-  width?: string;
+  width?: number;
   height?: number;
   className?: string;
   onClick?: () => void;
 }
 
 const GalleryImage = forwardRef<HTMLImageElement, ImageProps>(
-  ({ className, hash, width, height, src, alt, onClick, ...rest }, ref) => {
+  ({ className, src, height, hash, alt, onClick, ...rest }, ref) => {
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
       const img = new Image();
+      img.src = src;
       img.onload = () => {
         setIsLoaded(true);
       };
-      img.src = src;
     }, [src]);
 
     return (
@@ -29,8 +29,8 @@ const GalleryImage = forwardRef<HTMLImageElement, ImageProps>(
         {!isLoaded && hash && (
           <Blurhash
             hash={hash}
-            width={width ?? 400}
-            height={height ?? 300}
+            width={'100%'}
+            height={height ? height * 0.6 : height}
             resolutionX={32}
             resolutionY={32}
             punch={1}
