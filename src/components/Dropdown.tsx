@@ -26,23 +26,25 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(({ options, isOpen, i
       )}
     >
       <ul className="py-1.5 text-sm text-gray-200" aria-labelledby="dropdownDefaultButton">
-        {options.filter(e => !e.requiredOwner || isOwner).map(({ label, color, dropdownEvent }, index) => (
-          <li
-            key={index}
-            onClick={() => {
-              if (dropdownEvent) dropdownEvent();
-            }}
-          >
-            <p
-              className={clsx(
-                'block cursor-pointer px-4 py-1.5 hover:bg-gray-600 hover:text-white',
-                color ? color : '',
-              )}
+        {options
+          .filter((e) => !e.requiredOwner || isOwner)
+          .map(({ label, color, dropdownEvent }, index) => (
+            <li
+              key={index}
+              onClick={() => {
+                if (dropdownEvent) dropdownEvent();
+              }}
             >
-              {label}
-            </p>
-          </li>
-        ))}
+              <p
+                className={clsx(
+                  'block cursor-pointer px-4 py-1.5 hover:bg-gray-600 hover:text-white',
+                  color ? color : '',
+                )}
+              >
+                {label}
+              </p>
+            </li>
+          ))}
       </ul>
     </div>
   );
