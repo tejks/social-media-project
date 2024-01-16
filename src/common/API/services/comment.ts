@@ -1,9 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { IComment } from '../models/comment.model';
 
+import { env } from '@/common/config/env';
+
 export const commentApi = createApi({
   reducerPath: 'commentApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000', credentials: 'include' }),
+  baseQuery: fetchBaseQuery({ baseUrl: env.VITE_CUSTOM_API_URL, credentials: 'include' }),
   endpoints: (builder) => ({
     getComment: builder.query<IComment, string>({
       query: (id) => `comments/${id}`,

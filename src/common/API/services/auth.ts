@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { env } from '@/common/config/env';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { AuthUser, IUser } from '../models/user.model';
 
 export const authApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000', credentials: 'include' }),
+  baseQuery: fetchBaseQuery({ baseUrl: env.VITE_CUSTOM_API_URL, credentials: 'include' }),
   endpoints: (builder) => ({
     signin: builder.mutation<AuthUser, { email: string; password: string }>({
       query: ({ email, password }) => ({
@@ -13,18 +14,13 @@ export const authApi = createApi({
           username: email,
           password,
         },
-      })
+      }),
     }),
-    signup: builder.mutation<any, { email: string; password: string; firstName: string; lastName: string }>({
-      query: ({ email, password, firstName, lastName }) => ({
+    signup: builder.mutation<any, FormData>({
+      query: (data) => ({
         url: 'auth/signup',
         method: 'POST',
-        body: JSON.stringify({
-          email,
-          password,
-          firstName,
-          lastName,
-        }),
+        body: data,
       }),
     }),
     signout: builder.mutation<any, void>({
@@ -54,4 +50,11 @@ export const authApi = createApi({
   }),
 });
 
-export const { useSigninMutation, useSignupMutation, useSignoutMutation, useCurrentQuery, useGetAllUsersQuery, useGetUserByIdQuery } = authApi;
+export const {
+  useSigninMutation,
+  useSignupMutation,
+  useSignoutMutation,
+  useCurrentQuery,
+  useGetAllUsersQuery,
+  useGetUserByIdQuery,
+} = authApi;

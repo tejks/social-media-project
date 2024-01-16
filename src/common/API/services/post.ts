@@ -2,19 +2,23 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { IComment } from '../models/comment.model';
 import { IPost } from '../models/post.model';
 
+import { env } from '@/common/config/env';
+
 export const postApi = createApi({
   reducerPath: 'postApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000', credentials: 'include' }),
+  baseQuery: fetchBaseQuery({ baseUrl: env.VITE_CUSTOM_API_URL, credentials: 'include' }),
   endpoints: (builder) => ({
     getPost: builder.query<IPost, string>({
       query: (id) => `posts/${id}`,
-      transformResponse: (response: IPost) => {
-        console.log(response);
-        return response;
-      },
     }),
-    getAllPosts: builder.query<IPost[], void>({
-      query: () => `posts`,
+    getAllPosts: builder.query<IPost[], number | undefined>({
+      query: (page) => ({
+        url: `posts`,
+        method: 'GET',
+        params: {
+          page,
+        },
+      }),
     }),
     getCommentsByPostId: builder.query<IComment[], string>({
       query: (id) => `posts/${id}/comments`,
