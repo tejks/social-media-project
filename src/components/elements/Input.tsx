@@ -11,14 +11,16 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement>, Wrappe
 function Input({ type = 'text', className = '', labelValue, register, error, ...rest }: InputProps) {
   return (
     <FieldWrapper labelValue={labelValue} error={error}>
-      <div className="mt-1 rounded-3xl bg-gradient-to-r from-[#FB9D1F] to-[#1C5C75] p-0.5 text-center font-semibold text-white">
+      <div
+        className={clsx(
+          'mt-1 rounded-3xl bg-gradient-to-r from-[#FB9D1F] to-[#1C5C75] p-0.5 text-center font-semibold text-white',
+          ...className,
+        )}
+      >
         <div className="rounded-3xl bg-black">
           <input
             type={type}
-            className={clsx(
-              'w-full rounded-3xl  bg-transparent px-5 py-3 text-base text-white placeholder-gray-400',
-              className,
-            )}
+            className="w-full rounded-3xl bg-transparent px-3 py-2 text-sm font-normal text-white placeholder-gray-400 placeholder:italic placeholder:text-slate-400 lg:px-5 lg:py-3 lg:text-base"
             {...register}
             {...rest}
           />

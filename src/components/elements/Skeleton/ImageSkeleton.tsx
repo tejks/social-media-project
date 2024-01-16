@@ -1,11 +1,33 @@
-const ImageSkeleton: React.FC = () => {
+import clsx from 'clsx';
+
+type ImageSkeletonProps = {
+  size?: 'sm' | 'lg';
+};
+
+const ImageSkeleton: React.FC<ImageSkeletonProps> = ({ size }) => {
+  const getHeigthFromSize = () => {
+    switch (size) {
+      case 'sm':
+        return 'h-56';
+      case 'lg':
+        return 'h-96';
+      default:
+        return 'h-56';
+    }
+  };
+
   return (
     <div className="mb-4 w-full rounded-xl">
       <div
         role="status"
         className="animate-pulse space-y-8 rtl:space-x-reverse md:flex md:items-center md:space-x-8 md:space-y-0"
       >
-        <div className="flex h-48 w-full items-center justify-center rounded bg-gray-300 dark:bg-gray-700">
+        <div
+          className={clsx(
+            'flex w-full items-center justify-center rounded bg-gray-300 dark:bg-gray-700',
+            getHeigthFromSize(),
+          )}
+        >
           <svg
             className="h-10 w-10 text-gray-200 dark:text-gray-600"
             aria-hidden="true"

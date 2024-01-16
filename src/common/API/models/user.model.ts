@@ -1,34 +1,21 @@
 export interface IUser {
-  id: number;
-  name: string;
-  username: string;
+  id: string;
   email: string;
-  address: Address;
-  phone: string;
-  website: string;
-  company: Company;
+  username: string;
+  role: Role;
+  imageUrl: string;
 }
 
-export interface Address {
-  street: string;
-  suite: string;
-  city: string;
-  zipcode: string;
-  geo: Geo;
-  phone: string;
-  website: string;
-  company: Company;
+export interface AuthUser {
+  userId: string;
+  email: string;
+  role: Role;
+  imageUrl: string;
 }
 
-export interface Geo {
-  lat: string;
-  lng: string;
-}
-
-export interface Company {
-  name: string;
-  catchPhrase: string;
-  bs: string;
+enum Role {
+  USER,
+  ADMIN,
 }
 
 export interface GetAllUsersResponse {

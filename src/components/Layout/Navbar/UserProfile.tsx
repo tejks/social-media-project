@@ -1,18 +1,16 @@
-import { faker } from '@faker-js/faker';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import { useAppDispatch } from '@common/store';
-import { logout } from '@common/store/authSlice';
+import { AuthUser } from '@/common/API/models/user.model';
+import { useSignoutMutation } from '@/common/API/services/auth';
 
 interface UserProfileProps {
-  name: string;
-  email: string;
   isMobile?: boolean;
+  user: AuthUser;
 }
 
-const UserProfile: React.FC<UserProfileProps> = ({ email, name, isMobile }: UserProfileProps) => {
-  const dispatch = useAppDispatch();
+const UserProfile: React.FC<UserProfileProps> = ({ isMobile, user }: UserProfileProps) => {
+  const [signOut] = useSignoutMutation();
   const location = useLocation();
 
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -37,13 +35,10 @@ const UserProfile: React.FC<UserProfileProps> = ({ email, name, isMobile }: User
     };
   });
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const avatar = useMemo(() => faker.image.avatar(), [name]);
-
   if (isMobile)
     return (
       <div>
-        <img className="w-20 rounded-full opacity-80" src={avatar} alt="Bordered avatar" />
+        <img className="w-20 rounded-full opacity-80" src={user.imageUrl} alt="Bordered avatar" />
       </div>
     );
 
@@ -63,7 +58,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ email, name, isMobile }: User
         >
           <span className="sr-only">Open user menu</span>
 
-          <img className="h-11 w-11 rounded-full" src={avatar} alt="Bordered avatar" />
+          <img className="h-11 w-11 rounded-full" src={user.imageUrl} alt="Bordered avatar" />
         </button>
 
         {isDropdownOpen ? (
@@ -73,8 +68,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ email, name, isMobile }: User
             ref={dropdownRef}
           >
             <div className="px-4 py-3">
-              <span className="block text-sm text-white">{name}</span>
-              <span className="block truncate text-sm text-gray-400">{email}</span>
+              <span className="block truncate text-sm text-gray-400">{user.email}</span>
             </div>
             <ul className="py-2" aria-labelledby="user-menu-button">
               {dropDownList.map((element) => (
@@ -91,7 +85,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ email, name, isMobile }: User
             <div className="py-1">
               <Link
                 to={location}
-                onClick={() => dispatch(logout())}
+                onClick={() => signOut()}
                 className="block px-4 py-2 text-sm text-gray-200 hover:bg-[#FB9D1F] hover:text-white"
               >
                 Sign out

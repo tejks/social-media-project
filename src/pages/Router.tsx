@@ -10,6 +10,7 @@ import Photos from '@pages/Photos/Photos';
 import Albums from './Albums';
 import Home from './Home';
 import Login from './Login';
+import Signup from './Signup';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,15 @@ const router = createBrowserRouter([
           <>
             <Navbar />
             <Login />
+          </>
+        ),
+      },
+      {
+        path: '/signup',
+        element: (
+          <>
+            <Navbar />
+            <Signup />
           </>
         ),
       },

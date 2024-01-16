@@ -1,21 +1,60 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { env } from '@/common/config/env';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { env } from '../../config/env';
-import { IUser } from '../models/user.model';
+import { AuthUser, IUser } from '../models/user.model';
 
 export const authApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: env.VITE_JSONPLACEHOLDER_URL }),
+  baseQuery: fetchBaseQuery({ baseUrl: env.VITE_CUSTOM_API_URL, credentials: 'include' }),
   endpoints: (builder) => ({
-    login: builder.mutation<IUser | null, string>({
+    signin: builder.mutation<AuthUser, { email: string; password: string }>({
+      query: ({ email, password }) => ({
+        url: 'auth/signin',
+        method: 'POST',
+        body: {
+          username: email,
+          password,
+        },
+      }),
+    }),
+    signup: builder.mutation<any, FormData>({
+      query: (data) => ({
+        url: 'auth/signup',
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    signout: builder.mutation<any, void>({
+      query: () => ({
+        url: 'auth/signout',
+        method: 'POST',
+      }),
+    }),
+    current: builder.query<any, void>({
+      query: () => ({
+        url: 'users/current',
+        method: 'GET',
+      }),
+    }),
+    getAllUsers: builder.query<IUser[], void>({
       query: () => ({
         url: 'users',
         method: 'GET',
       }),
-      transformResponse: (response: IUser[], _, arg) => {
-        const user = response.find((user) => user.email === arg);
-        return user ? user : null;
-      },
+    }),
+    getUserById: builder.query<IUser, string>({
+      query: (id) => ({
+        url: `users/${id}`,
+        method: 'GET',
+      }),
     }),
   }),
 });
 
-export const { useLoginMutation } = authApi;
+export const {
+  useSigninMutation,
+  useSignupMutation,
+  useSignoutMutation,
+  useCurrentQuery,
+  useGetAllUsersQuery,
+  useGetUserByIdQuery,
+} = authApi;

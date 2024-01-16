@@ -1,8 +1,22 @@
 export interface IPost {
-  userId: number;
-  id: number;
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  content: string;
+  userId: string;
+  likes: number;
+  isLiked: boolean;
+  comments: number;
+  user: {
+    username: string;
+    id: string;
+    imageUrl: string;
+  };
+}
+
+export interface CreatePostDto {
   title: string;
-  body: string;
+  content: string;
 }
 
 export interface GetAllPostsResponse {

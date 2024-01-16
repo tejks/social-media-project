@@ -4,8 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
-import { useLoginMutation } from '@common/API/services/auth';
-
+import { useSigninMutation } from '@/common/API/services/auth';
 import Button from '@components/elements/Button';
 import Input from '@components/elements/Input';
 
@@ -29,10 +28,10 @@ const Login: React.FC = () => {
     mode: 'onChange',
   });
 
-  const [login] = useLoginMutation();
+  const [signIn] = useSigninMutation();
   const navigate = useNavigate();
-
-  const onSubmit: SubmitHandler<FormValues> = ({ email }) => login(email).then(() => navigate(-1));
+  const onSubmit: SubmitHandler<FormValues> = async ({ email, password }) =>
+    signIn({ email, password }).then(() => navigate('/posts'));
 
   return (
     <div className="flex h-screen flex-col items-center justify-center">
@@ -43,13 +42,13 @@ const Login: React.FC = () => {
             Account
           </p>
         </h5>
-        <form className="space-y-6 lg:w-3/4" action="#" onSubmit={handleSubmit(onSubmit)}>
+        <form className="mx-12 space-y-6 lg:w-3/4" action="#" onSubmit={handleSubmit(onSubmit)}>
           <Input
             labelValue="Your email"
             type="email"
             id="email"
-            defaultValue="Nathan@yesenia.net"
-            className="font-normal placeholder:italic placeholder:text-slate-400"
+            defaultValue="szymon@gmail.com"
+            className=""
             placeholder="user@example.com"
             error={errors['email']}
             register={register('email')}
@@ -58,20 +57,22 @@ const Login: React.FC = () => {
             labelValue="Password"
             type="password"
             id="password"
-            defaultValue="123"
-            className="placeholder:text-slate-400"
+            defaultValue="123123123"
+            className=""
             placeholder="••••••••"
             error={errors['password']}
             register={register('password')}
           />
+
           <div className="text-center">
             <Button color="primary" size="lg" className="my-2" type="submit">
               Sign in
             </Button>
           </div>
-          <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
+
+          <div className="text-xs font-medium text-gray-500 dark:text-gray-300 lg:text-sm">
             Don’t have an account yet?{' '}
-            <Link to={'/'} className="text-[#FB9D1F]">
+            <Link to={'/signup'} className="text-[#FB9D1F]">
               Create account
             </Link>
           </div>

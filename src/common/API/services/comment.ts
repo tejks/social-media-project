@@ -1,30 +1,26 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { IComment } from '../models/comment.model';
-import { env } from '../../config/env';
+
+import { env } from '@/common/config/env';
 
 export const commentApi = createApi({
   reducerPath: 'commentApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: env.VITE_JSONPLACEHOLDER_URL,
-  }),
+  baseQuery: fetchBaseQuery({ baseUrl: env.VITE_CUSTOM_API_URL, credentials: 'include' }),
   endpoints: (builder) => ({
-    getComment: builder.query<IComment, number>({
+    getComment: builder.query<IComment, string>({
       query: (id) => `comments/${id}`,
     }),
     getAllComments: builder.query<IComment[], void>({
       query: () => `comments`,
     }),
-    getCommentsForPost: builder.query<IComment[], number>({
-      query: (id) => `comments?postId=${id}`,
-    }),
-    addComment: builder.mutation<IComment, Partial<IComment>>({
+    createComment: builder.mutation<IComment, Partial<IComment>>({
       query: (body) => ({
         url: `comments`,
         method: 'POST',
         body,
       }),
     }),
-    deleteComment: builder.mutation<IComment, number>({
+    deleteComment: builder.mutation<IComment, string>({
       query: (id) => ({
         url: `comments/${id}`,
         method: 'DELETE',
@@ -43,8 +39,7 @@ export const commentApi = createApi({
 export const {
   useGetAllCommentsQuery,
   useGetCommentQuery,
-  useGetCommentsForPostQuery,
-  useAddCommentMutation,
+  useCreateCommentMutation,
   useDeleteCommentMutation,
   useUpdateCommentMutation,
 } = commentApi;

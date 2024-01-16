@@ -3,17 +3,19 @@ import { forwardRef } from 'react';
 
 interface DropdownProps {
   isOpen: boolean;
+  isOwner: boolean;
   options: IDropdownOption[];
 }
 
-interface IDropdownOption {
+export interface IDropdownOption {
   label: string;
   color?: string;
+  location?: string;
   requiredOwner?: boolean;
   dropdownEvent?: () => void;
 }
 
-const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(({ options, isOpen }, ref) => {
+const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(({ options, isOpen, isOwner }, ref) => {
   return (
     <div
       id="dropdown"
@@ -24,18 +26,25 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(({ options, isOpen },
       )}
     >
       <ul className="py-1.5 text-sm text-gray-200" aria-labelledby="dropdownDefaultButton">
-        {options.map(({ label, color }, index) => (
-          <li key={index}>
-            <p
-              className={clsx(
-                'block cursor-pointer px-4 py-1.5 hover:bg-gray-600 hover:text-white',
-                color ? color : '',
-              )}
+        {options
+          .filter((e) => !e.requiredOwner || isOwner)
+          .map(({ label, color, dropdownEvent }, index) => (
+            <li
+              key={index}
+              onClick={() => {
+                if (dropdownEvent) dropdownEvent();
+              }}
             >
-              {label}
-            </p>
-          </li>
-        ))}
+              <p
+                className={clsx(
+                  'block cursor-pointer px-4 py-1.5 hover:bg-gray-600 hover:text-white',
+                  color ? color : '',
+                )}
+              >
+                {label}
+              </p>
+            </li>
+          ))}
       </ul>
     </div>
   );
