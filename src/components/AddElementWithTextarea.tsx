@@ -8,10 +8,11 @@ import IconButton from './elements/IconButton';
 interface AddElementWithTextareaProps {
   name: string;
   isAuth: boolean;
+  textareaRows?: number;
   onAdd: (data: { text: string }) => void;
 }
 
-const AddElementWithTextarea: React.FC<AddElementWithTextareaProps> = ({ isAuth, onAdd, name }) => {
+const AddElementWithTextarea: React.FC<AddElementWithTextareaProps> = ({ isAuth, onAdd, name, textareaRows }) => {
   const [textareaValue, setTextareaValue] = useState('');
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -47,7 +48,7 @@ const AddElementWithTextarea: React.FC<AddElementWithTextareaProps> = ({ isAuth,
         </label>
         <textarea
           id={name}
-          rows={3}
+          rows={textareaRows ?? 3}
           className="w-full border-0 px-0 text-sm text-gray-900 focus:outline-none focus:ring-0 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 lg:text-base"
           placeholder={`Write a ${name}...`}
           required
@@ -66,7 +67,7 @@ const AddElementWithTextarea: React.FC<AddElementWithTextareaProps> = ({ isAuth,
         >
           {`Add ${name}`}
         </Button>
-        <IconButton className="ml-4">
+        {/* <IconButton className="ml-4">
           <svg
             className="h-5 w-5"
             aria-hidden="true"
@@ -93,8 +94,8 @@ const AddElementWithTextarea: React.FC<AddElementWithTextareaProps> = ({ isAuth,
               d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z"
             />
           </svg>
-        </IconButton>
-        <IconButton onClick={() => setIsEmojiPickerOpen(!isEmojiPickerOpen)}>
+        </IconButton> */}
+        <IconButton onClick={() => setIsEmojiPickerOpen(!isEmojiPickerOpen)} className="ml-4">
           <svg
             className="h-5 w-5"
             aria-hidden="true"
