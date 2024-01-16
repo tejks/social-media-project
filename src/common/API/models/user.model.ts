@@ -3,12 +3,14 @@ export interface IUser {
   email: string;
   username: string;
   role: Role;
+  imageUrl: string;
 }
 
 export interface AuthUser {
   userId: string;
   email: string;
   role: Role;
+  imageUrl: string;
 }
 
 enum Role {

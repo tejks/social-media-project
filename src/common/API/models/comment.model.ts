@@ -5,8 +5,10 @@ export interface IComment {
   content: string;
   userId: string;
   postId: string;
-  User: {
+  user: {
     username: string;
+    id: string;
+    imageUrl: string;
   };
 }
 

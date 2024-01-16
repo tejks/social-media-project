@@ -10,6 +10,7 @@ export interface IPost {
   user: {
     username: string;
     id: string;
+    imageUrl: string;
   };
 }
 
