@@ -51,8 +51,8 @@ const Comment: React.FC<CommentProps> = ({ commentId, comment, onCommentDelete, 
     <article className={clsx('py-3 text-sm sm:p-6', commentId != 0 ? 'border-t  border-gray-800' : '')}>
       <footer className="relative mb-2 flex items-center justify-between">
         <div className="flex items-center">
-          <p className="text-md mr-3 inline-flex items-center font-semibold text-gray-900 dark:text-white">
-            <img className="mr-2 h-6 w-6 rounded-full" src={comment.user.imageUrl} alt={comment.user.username} />
+          <p className="text-md mr-3 inline-flex items-center font-semibold text-white">
+            <img className="mr-2 h-6 w-6 rounded-full" src={comment.user.imageUrl} alt="" />
             {comment.user.username}
           </p>
         </div>
