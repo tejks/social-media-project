@@ -10,6 +10,7 @@ import PostElement from '@/components/PostElement';
 import AddElementWithTextarea from '@components/AddElementWithTextarea';
 import Comment from '@components/Comment';
 
+import PostSkeleton from '@/components/elements/Skeleton/PostSkeleton';
 import backgroundElement1 from '@assets/background-element-1.png';
 
 type PostRouteParams = {
@@ -22,7 +23,12 @@ const Post: React.FC = () => {
 
   const currentUser = useTypedSelector(selectCurrentUser);
 
-  const { data: post, isLoading: isPostLoading, refetch: refetchPost } = useGetPostQuery(id as string);
+  const {
+    data: post,
+    isLoading: isPostLoading,
+    isFetching: isPostFetching,
+    refetch: refetchPost,
+  } = useGetPostQuery(id as string);
   const {
     data: comments,
     isLoading: isCommentsLoading,
@@ -35,7 +41,7 @@ const Post: React.FC = () => {
 
   useEffect(() => {
     refetchPost();
-  }, [post, currentUser, refetchPost]);
+  }, [currentUser, refetchPost]);
 
   const onCommentCreate = async (id: string, text: string) => {
     try {
@@ -67,9 +73,6 @@ const Post: React.FC = () => {
     }
   };
 
-  if (isPostLoading && isCommentsLoading) return 'Loading...';
-  if (!post || !comments) return 'Post not found';
-
   return (
     <section className="container mx-auto flex justify-center">
       <div className="fixed bottom-0 right-0 -z-10 rotate-180 opacity-30 xl:opacity-70">
@@ -79,7 +82,7 @@ const Post: React.FC = () => {
       <div className="relative z-10 flex w-full flex-col justify-center px-4 md:max-w-4xl md:px-24 lg:px-24 xl:px-24">
         <div
           className="absolute left-6 hidden h-11 w-11 cursor-pointer items-center justify-center rounded-full text-white hover:text-[#FB9D1F] md:top-48 md:flex "
-          onClick={() => navigate(-1)}
+          onClick={() => navigate('/posts')}
         >
           <svg
             className="h-6 w-6"
@@ -99,26 +102,33 @@ const Post: React.FC = () => {
         </div>
 
         <div className="post__post-box mt-40 flex flex-col justify-center">
-          <PostElement post={post} route={false} auth={currentUser} onPostDelete={onPostDelete} />
+          {post && comments && !isCommentsLoading && !isPostLoading && !isPostFetching ? (
+            <PostElement post={post} route={false} auth={currentUser} onPostDelete={onPostDelete} />
+          ) : (
+            <PostSkeleton />
+          )}
         </div>
 
-        <section className="py-10 antialiased">
+        <section className="pt-16 antialiased">
           <div className="mx-auto max-w-2xl px-4">
             <AddElementWithTextarea
               name="comment"
               isAuth={!!currentUser}
-              onAdd={({ text }) => onCommentCreate(post.id, text)}
+              textareaRows={2}
+              onAdd={({ text }) => (post ? onCommentCreate(post.id, text) : null)}
             />
 
-            {comments.map((comment, index) => (
-              <Comment
-                key={index}
-                commentId={index}
-                comment={comment}
-                onCommentDelete={(id) => onCommentDelete(id)}
-                authUserId={currentUser?.userId}
-              />
-            ))}
+            {comments
+              ? comments.map((comment, index) => (
+                  <Comment
+                    key={index}
+                    commentId={index}
+                    comment={comment}
+                    onCommentDelete={(id) => onCommentDelete(id)}
+                    authUserId={currentUser?.userId}
+                  />
+                ))
+              : null}
           </div>
         </section>
       </div>

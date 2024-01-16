@@ -31,7 +31,7 @@ const Login: React.FC = () => {
   const [signIn] = useSigninMutation();
   const navigate = useNavigate();
   const onSubmit: SubmitHandler<FormValues> = async ({ email, password }) =>
-    signIn({ email, password }).then(() => navigate(-1));
+    signIn({ email, password }).then(() => navigate('/posts'));
 
   return (
     <div className="flex h-screen flex-col items-center justify-center">
@@ -42,13 +42,13 @@ const Login: React.FC = () => {
             Account
           </p>
         </h5>
-        <form className="space-y-6 lg:w-3/4" action="#" onSubmit={handleSubmit(onSubmit)}>
+        <form className="mx-12 space-y-6 lg:w-3/4" action="#" onSubmit={handleSubmit(onSubmit)}>
           <Input
             labelValue="Your email"
             type="email"
             id="email"
             defaultValue="szymon@gmail.com"
-            className="font-normal placeholder:italic placeholder:text-slate-400"
+            className=""
             placeholder="user@example.com"
             error={errors['email']}
             register={register('email')}
@@ -58,19 +58,21 @@ const Login: React.FC = () => {
             type="password"
             id="password"
             defaultValue="123123123"
-            className="placeholder:text-slate-400"
+            className=""
             placeholder="••••••••"
             error={errors['password']}
             register={register('password')}
           />
+
           <div className="text-center">
             <Button color="primary" size="lg" className="my-2" type="submit">
               Sign in
             </Button>
           </div>
-          <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
+
+          <div className="text-xs font-medium text-gray-500 dark:text-gray-300 lg:text-sm">
             Don’t have an account yet?{' '}
-            <Link to={'/'} className="text-[#FB9D1F]">
+            <Link to={'/signup'} className="text-[#FB9D1F]">
               Create account
             </Link>
           </div>

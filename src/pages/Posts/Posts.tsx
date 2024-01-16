@@ -16,19 +16,20 @@ const Posts: React.FC = () => {
   const {
     data: posts,
     isLoading: isPostsLoading,
+    isFetching: isPostsFetching,
     refetch,
   } = useGetAllPostsQuery(undefined, {
-    pollingInterval: 10000,
+    refetchOnMountOrArgChange: true,
+    refetchOnReconnect: true,
   });
+
   const [createPost] = useCreatePostMutation();
 
   const onPostCreate = async (text: string) => {
     try {
-      await createPost({
+      createPost({
         content: text,
-      });
-
-      refetch();
+      }).then(() => refetch());
     } catch (error) {
       console.error(error);
     }
@@ -51,7 +52,7 @@ const Posts: React.FC = () => {
         <PostTextarea name="post" isAuth={!!currentUser} onAdd={({ text }) => onPostCreate(text)} />
 
         <div className="posts__posts-list flex flex-col justify-center">
-          {posts && !isPostsLoading
+          {posts && !isPostsLoading && !isPostsFetching
             ? posts.map((post) => <PostElement key={post.id} post={post} auth={currentUser} />)
             : Array.from(Array(10).keys()).map((_, index) => <PostSkeleton key={index} />)}
         </div>

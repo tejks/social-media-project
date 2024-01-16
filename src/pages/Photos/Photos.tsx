@@ -35,22 +35,19 @@ const Photos: React.FC = () => {
         className="container mx-auto columns-1 px-4 pt-32 sm:w-5/6 sm:columns-2 lg:w-4/5 lg:columns-3 2xl:w-3/4 2xl:columns-4"
       >
         {photos && !isLoading
-          ? photos.map((item, index) => {
-              console.log(item.height, item.width);
-              return (
-                <GalleryImage
-                  key={index}
-                  src={item.urls.small}
-                  alt={item.description}
-                  hash={item.blur_hash}
-                  width={calculateAspectRatioFit(item.width, item.height, 640).width}
-                  height={calculateAspectRatioFit(item.width, item.height, 640).height}
-                  onClick={() => openModal(item)}
-                  className="mb-4 w-full rounded-xl"
-                  loading="lazy"
-                />
-              );
-            })
+          ? photos.map((item, index) => (
+              <GalleryImage
+                key={index}
+                src={item.urls.small}
+                alt={item.description}
+                hash={item.blur_hash}
+                width={calculateAspectRatioFit(item.width, item.height, 640).width}
+                height={calculateAspectRatioFit(item.width, item.height, 640).height}
+                onClick={() => openModal(item)}
+                className="mb-4 w-full rounded-xl"
+                loading="lazy"
+              />
+            ))
           : Array.from(Array(24).keys()).map((_, index) => (
               <ImageSkeleton key={index} size={Math.random() > 0.5 ? 'sm' : 'lg'} />
             ))}
