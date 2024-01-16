@@ -11,10 +11,14 @@ interface WrapperProps {
 function FieldWrapper({ labelValue, className, error, children }: WrapperProps) {
   return (
     <div>
-      <label className={clsx('ml-5 block text-sm font-normal text-white', className)}>{labelValue}</label>
+      <label className={clsx('ml-5 block text-xs font-normal text-white lg:text-sm', className)}>{labelValue}</label>
       {children}
       {error?.message && (
-        <div role="alert" aria-label={error.message} className="ml-5 mt-1 text-xs font-semibold text-red-600">
+        <div
+          role="alert"
+          aria-label={error.message}
+          className="absolute ml-5 mt-1 text-xs font-normal text-red-600 lg:font-semibold"
+        >
           {error.message}
         </div>
       )}

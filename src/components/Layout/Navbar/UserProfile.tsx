@@ -1,15 +1,15 @@
-import { faker } from '@faker-js/faker';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
+import { AuthUser } from '@/common/API/models/user.model';
 import { useSignoutMutation } from '@/common/API/services/auth';
 
 interface UserProfileProps {
-  email: string;
   isMobile?: boolean;
+  user: AuthUser;
 }
 
-const UserProfile: React.FC<UserProfileProps> = ({ email, isMobile }: UserProfileProps) => {
+const UserProfile: React.FC<UserProfileProps> = ({ isMobile, user }: UserProfileProps) => {
   const [signOut] = useSignoutMutation();
   const location = useLocation();
 
@@ -35,13 +35,10 @@ const UserProfile: React.FC<UserProfileProps> = ({ email, isMobile }: UserProfil
     };
   });
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const avatar = useMemo(() => faker.image.avatar(), [name]);
-
   if (isMobile)
     return (
       <div>
-        <img className="w-20 rounded-full opacity-80" src={avatar} alt="Bordered avatar" />
+        <img className="w-20 rounded-full opacity-80" src={user.imageUrl} alt="Bordered avatar" />
       </div>
     );
 
@@ -61,7 +58,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ email, isMobile }: UserProfil
         >
           <span className="sr-only">Open user menu</span>
 
-          <img className="h-11 w-11 rounded-full" src={avatar} alt="Bordered avatar" />
+          <img className="h-11 w-11 rounded-full" src={user.imageUrl} alt="Bordered avatar" />
         </button>
 
         {isDropdownOpen ? (
@@ -71,7 +68,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ email, isMobile }: UserProfil
             ref={dropdownRef}
           >
             <div className="px-4 py-3">
-              <span className="block truncate text-sm text-gray-400">{email}</span>
+              <span className="block truncate text-sm text-gray-400">{user.email}</span>
             </div>
             <ul className="py-2" aria-labelledby="user-menu-button">
               {dropDownList.map((element) => (

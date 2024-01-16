@@ -103,11 +103,15 @@ const PostElement: React.FC<PostElementProps> = ({ post, route = true, auth, onP
   });
 
   return (
-    <div className="post-element__context my-4 grid grid-cols-10 gap-3 rounded-lg border border-[#1c5c7585] bg-[#1c5c7521] px-3 py-4 text-sm shadow sm:gap-4 sm:px-4 sm:py-4 lg:text-base">
+    <div className="post-element__context relative my-4 grid grid-cols-10 gap-3 rounded-lg border border-[#1c5c7585] bg-[#1c5c7521] px-3 py-4 text-sm sm:px-4 sm:py-4 lg:text-base">
+      {/* <div className="absolute right-0 top-0 -z-10 rotate-90 opacity-30 xl:opacity-70">
+        <img src={backgroundElement1} alt="" width={80} />
+      </div> */}
+
       <div className="post-element__image-box hidden justify-center sm:col-start-1 sm:col-end-1 sm:flex">
         <img
           className="h-8 w-8 rounded-full object-cover shadow sm:h-12 sm:w-12"
-          src="https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+          src={post.user.imageUrl}
           alt="avatar"
         />
       </div>
@@ -117,7 +121,7 @@ const PostElement: React.FC<PostElementProps> = ({ post, route = true, auth, onP
           <div className="relative flex items-center justify-start">
             <img
               className="mr-3 h-8 w-8 rounded-full object-cover shadow sm:hidden"
-              src="https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+              src={post.user.imageUrl}
               alt="avatar"
             />
             <div className="post-element__info pt-1">
