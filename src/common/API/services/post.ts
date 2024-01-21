@@ -3,6 +3,7 @@ import { IComment } from '../models/comment.model';
 import { IPost } from '../models/post.model';
 
 import { env } from '@/common/config/env';
+import { PaginatedResult } from '../interfaces/paginatedResult';
 
 export const postApi = createApi({
   reducerPath: 'postApi',
@@ -11,7 +12,7 @@ export const postApi = createApi({
     getPost: builder.query<IPost, string>({
       query: (id) => `posts/${id}`,
     }),
-    getAllPosts: builder.query<IPost[], number | undefined>({
+    getAllPosts: builder.query<PaginatedResult<IPost>, number | undefined>({
       query: (page) => ({
         url: `posts`,
         method: 'GET',
@@ -19,6 +20,19 @@ export const postApi = createApi({
           page,
         },
       }),
+      keepUnusedDataFor: 0,
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName;
+      },
+      // Always merge incoming data to the cache entry
+      merge: (currentCache, newItems) => {
+        currentCache.data.push(...newItems.data);
+        currentCache.meta = newItems.meta;
+      },
+      // Refetch when the page arg changes
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
     }),
     getCommentsByPostId: builder.query<IComment[], string>({
       query: (id) => `posts/${id}/comments`,
@@ -68,4 +82,5 @@ export const {
   useUpdatePostMutation,
   useLikePostMutation,
   useUnlikePostMutation,
+  useLazyGetAllPostsQuery,
 } = postApi;
