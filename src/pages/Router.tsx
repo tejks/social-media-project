@@ -6,6 +6,8 @@ import Navbar from '@components/Layout/Navbar/Navbar';
 import Post from '@pages/Posts/Post';
 import Posts from '@pages/Posts/Posts';
 
+import Footer from '@/components/Layout/Footer';
+import RouteWrapper from '@/components/Layout/RouteWrapper';
 import Photos from '@pages/Photos/Photos';
 import Albums from './Albums';
 import Home from './Home';
@@ -43,37 +45,41 @@ const router = createBrowserRouter([
       {
         path: '/posts',
         element: (
-          <>
+          <RouteWrapper>
             <Navbar />
             <Posts />
-          </>
+            <Footer />
+          </RouteWrapper>
         ),
       },
       {
         path: '/posts/:id',
         element: (
-          <>
+          <RouteWrapper>
             <Navbar />
             <Post />
-          </>
+            <Footer />
+          </RouteWrapper>
         ),
       },
       {
         path: '/albums',
         element: (
-          <>
+          <RouteWrapper>
             <Navbar />
             <Albums />
-          </>
+            <Footer />
+          </RouteWrapper>
         ),
       },
       {
         path: '/photos',
         element: (
-          <>
+          <RouteWrapper>
             <Navbar />
             <Photos />,
-          </>
+            <Footer />
+          </RouteWrapper>
         ),
       },
     ],
