@@ -1,34 +1,28 @@
-import { Link, isRouteErrorResponse, useRouteError } from 'react-router-dom';
+import { isRouteErrorResponse, useRouteError } from 'react-router-dom';
+import Button from './elements/Button';
 
 const ErrorPage: React.FC = () => {
   const error = useRouteError();
 
-  if (isRouteErrorResponse(error)) {
-    if (error.status === 401) {
-      // ...
-    } else if (error.status === 404) {
-      // ...
-    }
-
+  if (isRouteErrorResponse(error))
     return (
-      <div className="grid h-screen place-content-center bg-white px-4">
+      <div className="grid h-screen place-content-center px-4">
         <div className="text-center">
-          <h1 className="text-9xl font-black text-gray-200">{error.status}</h1>
+          <h1 className="inline-block bg-gradient-to-r from-[#FB9D1F] to-[#1C5C75] bg-clip-text text-9xl  text-transparent">
+            {error.status}
+          </h1>
 
-          <p className="text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl">Uh-oh!</p>
+          <p className="text-2xl font-bold tracking-tight text-white sm:text-4xl">Uh-oh!</p>
 
           <p className="mt-4 text-gray-500">We can't find that page.</p>
 
-          <Link
-            to={'/'}
-            className="mt-6 inline-block rounded bg-fuchsia-700 px-5 py-3 text-sm font-medium text-white hover:bg-fuchsia-800 focus:outline-none focus:ring"
-          >
+          <Button type="button" className="mt-8" size="sm" to="/">
             Go Back Home
-          </Link>
+          </Button>
         </div>
       </div>
     );
-  } else if (error instanceof Error) {
+  else if (error instanceof Error)
     return (
       <div id="error-page">
         <h1>Oops! Unexpected Error</h1>
@@ -38,9 +32,7 @@ const ErrorPage: React.FC = () => {
         </p>
       </div>
     );
-  } else {
-    return <></>;
-  }
+  else return <></>;
 };
 
 export default ErrorPage;
