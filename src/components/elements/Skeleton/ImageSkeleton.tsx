@@ -22,14 +22,9 @@ const ImageSkeleton: React.FC<ImageSkeletonProps> = ({ size }) => {
         role="status"
         className="animate-pulse space-y-8 rtl:space-x-reverse md:flex md:items-center md:space-x-8 md:space-y-0"
       >
-        <div
-          className={clsx(
-            'flex w-full items-center justify-center rounded bg-gray-300 dark:bg-gray-700',
-            getHeigthFromSize(),
-          )}
-        >
+        <div className={clsx('flex w-full items-center justify-center rounded bg-gray-700', getHeigthFromSize())}>
           <svg
-            className="h-10 w-10 text-gray-200 dark:text-gray-600"
+            className="h-10 w-10 text-gray-600"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="currentColor"

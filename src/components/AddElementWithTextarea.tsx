@@ -49,7 +49,7 @@ const AddElementWithTextarea: React.FC<AddElementWithTextareaProps> = ({ isAuth,
         <textarea
           id={name}
           rows={textareaRows ?? 3}
-          className="w-full border-0 bg-gray-800 px-0 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-0 lg:text-base"
+          className="w-full border-0 bg-gray-800 px-0 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-0"
           placeholder={`Write a ${name}...`}
           required
           value={textareaValue}
@@ -57,8 +57,10 @@ const AddElementWithTextarea: React.FC<AddElementWithTextareaProps> = ({ isAuth,
           onKeyDown={onKeyDown}
         ></textarea>
       </div>
+
       <div className="flex">
         <Button
+          size="sm"
           type="button"
           onClick={() => {
             setTextareaValue('');
@@ -96,14 +98,15 @@ const AddElementWithTextarea: React.FC<AddElementWithTextareaProps> = ({ isAuth,
               setIsEmojiPickerOpen(false);
             }}
             skinTonesDisabled={true}
-            style={{ position: 'absolute', top: '-20px', right: '50px', zIndex: 100 }}
+            style={{ position: 'absolute', top: '-20px', right: '50px', zIndex: '100' }}
           />
         </div>
       ) : null}
     </div>
   );
+
   return (
-    <form className="relative mb-14 mt-8 opacity-80">
+    <form className="relative mb-14 mt-8">
       {!isAuth ? (
         <div className="absolute z-10 flex h-full w-full items-center justify-center">
           <Link to={'/login'} className="font-bold text-[#FB9D1F]">

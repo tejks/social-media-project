@@ -21,52 +21,8 @@ const PostElement: React.FC<PostElementProps> = ({ post, route = true, auth, onP
   const [numberOfLikes, setNumberOfLikes] = useState(post.likes);
   const [isCopied, setIsCopied] = useState(false);
 
-  useEffect(() => {
-    setIsLiked(post.isLiked);
-    setNumberOfLikes(post.likes);
-  }, [post]);
-
   const [likePost] = useLikePostMutation();
   const [unlikePost] = useUnlikePostMutation();
-
-  const getFullDate = useCallback((date: Date) => {
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: 'numeric',
-      minute: 'numeric',
-    });
-  }, []);
-
-  function onLikeClick() {
-    if (!auth) return navigate('/login');
-
-    if (isLiked) {
-      setNumberOfLikes(numberOfLikes - 1);
-      unlikePost(post.id);
-    } else {
-      setNumberOfLikes(numberOfLikes + 1);
-      likePost(post.id);
-    }
-
-    setIsLiked(!isLiked);
-  }
-
-  async function copyTextToClipboard(text: string) {
-    if ('clipboard' in navigator) {
-      return await navigator.clipboard.writeText(text);
-    }
-  }
-
-  async function onShareClick() {
-    copyTextToClipboard(`${window.location.origin}/posts/${post.id}`).then(() => {
-      setIsCopied(true);
-      setTimeout(() => {
-        setIsCopied(false);
-      }, 1000);
-    });
-  }
 
   const dropdownOptions: IDropdownOption[] = [
     {
@@ -88,6 +44,54 @@ const PostElement: React.FC<PostElementProps> = ({ post, route = true, auth, onP
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+  const getFullDate = useCallback((date: Date) => {
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: 'numeric',
+      minute: 'numeric',
+    });
+  }, []);
+
+  const onLikeClick = async () => {
+    if (!auth) return navigate('/login');
+
+    try {
+      if (isLiked) {
+        await unlikePost(post.id);
+        setNumberOfLikes(numberOfLikes - 1);
+      } else {
+        await likePost(post.id);
+        setNumberOfLikes(numberOfLikes + 1);
+      }
+
+      setIsLiked(!isLiked);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const copyTextToClipboard = async (text: string) => {
+    if ('clipboard' in navigator) {
+      return await navigator.clipboard.writeText(text);
+    }
+  };
+
+  const onShareClick = () => {
+    copyTextToClipboard(`${window.location.origin}/posts/${post.id}`).then(() => {
+      setIsCopied(true);
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 1000);
+    });
+  };
+
+  useEffect(() => {
+    setIsLiked(post.isLiked);
+    setNumberOfLikes(post.likes);
+  }, [post]);
+
   useEffect(() => {
     const handler = (event: MouseEvent) => {
       if (!dropdownRef.current?.contains(event.target as Node)) {
@@ -103,11 +107,7 @@ const PostElement: React.FC<PostElementProps> = ({ post, route = true, auth, onP
   });
 
   return (
-    <div className="post-element__context relative my-4 grid grid-cols-10 gap-3 rounded-lg border border-[#1c5c7585] bg-[#1c5c7521] px-3 py-4 text-sm sm:px-4 sm:py-4 lg:text-base">
-      {/* <div className="absolute right-0 top-0 -z-10 rotate-90 opacity-30 xl:opacity-70">
-        <img src={backgroundElement1} alt="" width={80} />
-      </div> */}
-
+    <div className="post-element__context my-4 grid grid-cols-10 gap-3 rounded-lg border border-[#1c5c7585] bg-[#1c5c7521] px-3 py-4 text-sm sm:px-4 sm:py-4">
       <div className="post-element__image-box hidden justify-center sm:col-start-1 sm:col-end-1 sm:flex">
         <img
           className="h-8 w-8 rounded-full object-cover shadow sm:h-12 sm:w-12"
@@ -134,7 +134,7 @@ const PostElement: React.FC<PostElementProps> = ({ post, route = true, auth, onP
                 <button
                   id="dropdownComment1Button"
                   data-dropdown-toggle="dropdownComment1"
-                  className="items-center rounded-lg p-2 text-center text-sm font-medium text-gray-400  hover:bg-gray-700 "
+                  className="items-center rounded-lg p-2 text-center text-sm font-medium text-gray-400  hover:bg-gray-700"
                   type="button"
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 >

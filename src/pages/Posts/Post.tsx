@@ -39,10 +39,6 @@ const Post: React.FC = () => {
   const [deleteComment] = useDeleteCommentMutation();
   const [deletePost] = useDeletePostMutation();
 
-  useEffect(() => {
-    refetchPost();
-  }, [currentUser, refetchPost]);
-
   const onCommentCreate = async (id: string, text: string) => {
     try {
       await createComment({
@@ -73,13 +69,17 @@ const Post: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    refetchPost();
+  }, [currentUser, refetchPost]);
+
   return (
-    <section className="container mx-auto flex justify-center">
+    <main className="container mx-auto flex justify-center">
       <div className="fixed bottom-0 right-0 -z-10 rotate-180 opacity-30 xl:opacity-70">
         <img src={backgroundElement1} alt="" width={200} />
       </div>
 
-      <div className="relative z-10 flex w-full flex-col justify-center px-4 md:max-w-4xl md:px-24 lg:px-24 xl:px-24">
+      <div className="relative z-10 flex w-full flex-col justify-center px-4 md:max-w-4xl md:px-24 lg:px-40 xl:px-32">
         <div
           className="absolute left-6 hidden h-11 w-11 cursor-pointer items-center justify-center rounded-full text-white hover:text-[#FB9D1F] md:top-48 md:flex "
           onClick={() => navigate('/posts')}
@@ -132,7 +132,7 @@ const Post: React.FC = () => {
           </div>
         </section>
       </div>
-    </section>
+    </main>
   );
 };
 

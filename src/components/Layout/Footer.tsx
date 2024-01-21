@@ -2,8 +2,7 @@ import React from 'react';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="m-5 rounded-lg shadow">
-      <hr className="my-6 border-gray-700 sm:mx-auto lg:my-5" />
+    <footer className="relative -z-20 mt-10 flex items-center justify-center border-t border-t-gray-600 p-3 shadow">
       <span className="block text-sm text-gray-400 sm:text-center">
         © 2023{' '}
         <a href="#" className="hover:underline">

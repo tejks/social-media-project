@@ -17,7 +17,7 @@ const Posts: React.FC = () => {
     data: posts,
     isLoading: isPostsLoading,
     isFetching: isPostsFetching,
-    refetch,
+    refetch: refetchPosts,
   } = useGetAllPostsQuery(undefined, {
     refetchOnMountOrArgChange: true,
     refetchOnReconnect: true,
@@ -27,17 +27,18 @@ const Posts: React.FC = () => {
 
   const onPostCreate = async (text: string) => {
     try {
-      createPost({
+      await createPost({
         content: text,
-      }).then(() => refetch());
+      });
+      refetchPosts();
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    refetch();
-  }, [currentUser, refetch]);
+    refetchPosts();
+  }, [currentUser, refetchPosts]);
 
   return (
     <section id="posts-section" className="container mx-auto flex justify-center">
@@ -45,7 +46,7 @@ const Posts: React.FC = () => {
         <img src={backgroundElement1} alt="" width={200} />
       </div>
 
-      <div className="posts__context flex w-full flex-col justify-center px-4 md:max-w-4xl md:px-24 lg:px-16 xl:px-24">
+      <div className="posts__context flex w-full flex-col justify-center px-4 md:max-w-4xl md:px-24 lg:px-40 xl:px-32">
         <h1 className="posts__header mt-32 text-3xl font-semibold text-white">Posts</h1>
         <hr className="my-4 border-gray-800" />
 
