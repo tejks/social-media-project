@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
+
 import { useCreatePostMutation, useGetAllPostsQuery } from '@common/API/services/post';
 import { useTypedSelector } from '@common/store';
 import { selectCurrentUser } from '@common/store/authSlice';
@@ -8,20 +11,17 @@ import ScrollToTop from '@components/ScrollToTop';
 import PostSkeleton from '@components/elements/Skeleton/PostSkeleton';
 
 import backgroundElement1 from '@assets/background-element-1.png';
-import { useEffect } from 'react';
 
 const Posts: React.FC = () => {
   const currentUser = useTypedSelector(selectCurrentUser);
+  const [site, setSite] = useState(1);
 
   const {
     data: posts,
     isLoading: isPostsLoading,
-    isFetching: isPostsFetching,
+    // isFetching: isPostsFetching,
     refetch: refetchPosts,
-  } = useGetAllPostsQuery(undefined, {
-    refetchOnMountOrArgChange: true,
-    refetchOnReconnect: true,
-  });
+  } = useGetAllPostsQuery(site);
 
   const [createPost] = useCreatePostMutation();
 
@@ -53,9 +53,20 @@ const Posts: React.FC = () => {
         <PostTextarea name="post" isAuth={!!currentUser} onAdd={({ text }) => onPostCreate(text)} />
 
         <div className="posts__posts-list flex flex-col justify-center">
-          {posts && !isPostsLoading && !isPostsFetching
-            ? posts.map((post) => <PostElement key={post.id} post={post} auth={currentUser} />)
-            : Array.from(Array(10).keys()).map((_, index) => <PostSkeleton key={index} />)}
+          {posts && !isPostsLoading ? (
+            <InfiniteScroll
+              hasMore={posts.meta.next ? true : false}
+              dataLength={posts.data.length}
+              next={() => setSite(site + 1)}
+              loader={'Loading...'}
+            >
+              {posts.data.map((post, id) => (
+                <PostElement key={id} post={post} auth={currentUser} />
+              ))}
+            </InfiniteScroll>
+          ) : (
+            Array.from(Array(10).keys()).map((_, index) => <PostSkeleton key={index} />)
+          )}
         </div>
       </div>
 
