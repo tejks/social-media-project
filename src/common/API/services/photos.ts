@@ -8,8 +8,20 @@ export const photoApi = createApi({
   reducerPath: 'photoApi',
   baseQuery: fetchBaseQuery({ baseUrl: env.VITE_UNSPLASH_URL }),
   endpoints: (builder) => ({
-    getRandomPhotos: builder.query<IUnsplashPhoto[], void>({
-      query: () => `/photos/random/?&client_id=${clientId}&count=30`,
+    getRandomPhotos: builder.query<IUnsplashPhoto[], number | void>({
+      query: () => `/photos/random?&client_id=${clientId}&count=30`,
+      keepUnusedDataFor: 0,
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName;
+      },
+      // Always merge incoming data to the cache entry
+      merge: (currentCache, newItems) => {
+        currentCache.push(...newItems);
+      },
+      // Refetch when the page arg changes
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
     }),
   }),
 });
