@@ -38,7 +38,7 @@ const Photos: React.FC = () => {
           hasMore={photos ? true : false}
           dataLength={photos.length}
           next={() => setSite(site + 1)}
-          loader={'Loading...'}
+          loader={''}
         >
           {photos.map((item, index) => (
             <GalleryImage
@@ -55,9 +55,11 @@ const Photos: React.FC = () => {
           ))}
         </InfiniteScroll>
       ) : (
-        Array.from(Array(24).keys()).map((_, index) => (
-          <ImageSkeleton key={index} size={Math.random() > 0.5 ? 'sm' : 'lg'} />
-        ))
+        <div className="container mx-auto columns-1 px-4 pt-32 sm:w-5/6 sm:columns-2 lg:w-4/5 lg:columns-3 2xl:w-3/4 2xl:columns-4">
+          {Array.from(Array(24).keys()).map((_, index) => (
+            <ImageSkeleton key={index} size={Math.random() > 0.5 ? 'sm' : 'lg'} />
+          ))}
+        </div>
       )}
 
       <ScrollToTop />
