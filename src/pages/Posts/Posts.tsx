@@ -10,31 +10,33 @@ import PostElement from '@components/PostElement';
 import ScrollToTop from '@components/ScrollToTop';
 import PostSkeleton from '@components/elements/Skeleton/PostSkeleton';
 
+import { IPost } from '@/common/API/models/post.model';
 import backgroundElement1 from '@assets/background-element-1.png';
 
 const Posts: React.FC = () => {
   const currentUser = useTypedSelector(selectCurrentUser);
   const [site, setSite] = useState(1);
+  const [displayPosts, setDisplayPosts] = useState<IPost[]>();
 
-  const {
-    data: posts,
-    isLoading: isPostsLoading,
-    // isFetching: isPostsFetching,
-    refetch: refetchPosts,
-  } = useGetAllPostsQuery(site);
+  const { data: posts, isLoading: isPostsLoading, refetch: refetchPosts } = useGetAllPostsQuery(site);
 
   const [createPost] = useCreatePostMutation();
 
   const onPostCreate = async (text: string) => {
     try {
-      await createPost({
+      const post = await createPost({
         content: text,
-      });
-      refetchPosts();
+      }).unwrap();
+
+      setDisplayPosts((e) => [post, ...e!]);
     } catch (error) {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    if (posts) setDisplayPosts(posts.data);
+  }, [posts]);
 
   useEffect(() => {
     refetchPosts();
@@ -53,14 +55,14 @@ const Posts: React.FC = () => {
         <PostTextarea name="post" isAuth={!!currentUser} onAdd={({ text }) => onPostCreate(text)} />
 
         <div className="posts__posts-list flex flex-col justify-center">
-          {posts && !isPostsLoading ? (
+          {posts && !isPostsLoading && displayPosts ? (
             <InfiniteScroll
               hasMore={posts.meta.next ? true : false}
               dataLength={posts.data.length}
               next={() => setSite(site + 1)}
               loader={'Loading...'}
             >
-              {posts.data.map((post, id) => (
+              {displayPosts.map((post, id) => (
                 <PostElement key={id} post={post} auth={currentUser} />
               ))}
             </InfiniteScroll>
