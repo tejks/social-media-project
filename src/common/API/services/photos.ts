@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { IUnsplashPhoto } from '../models/photo.model';
 import { env } from '../../config/env';
+import { IUnsplashPhoto } from '../models/photo.model';
 
 const clientId = process.env.UNSPLASH_ACCESS_KEY;
 

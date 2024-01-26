@@ -34,7 +34,7 @@ const Photos: React.FC = () => {
       {isModalOpen === true && selectedImage !== null && <ImageModal onClose={closeModal} imageData={selectedImage} />}
       {photos && !isLoading ? (
         <InfiniteScroll
-          className="container mx-auto columns-1 px-4 pt-32 sm:w-5/6 sm:columns-2 lg:w-4/5 lg:columns-3 2xl:w-3/4 2xl:columns-4"
+          className="container mx-auto columns-1 gap-8 pt-32 sm:w-5/6 sm:columns-2 lg:w-4/5 lg:columns-3 2xl:w-3/4 2xl:columns-4"
           hasMore={photos ? true : false}
           dataLength={photos.length}
           next={() => setSite(site + 1)}
@@ -49,13 +49,13 @@ const Photos: React.FC = () => {
               width={calculateAspectRatioFit(item.width, item.height, 640).width}
               height={calculateAspectRatioFit(item.width, item.height, 640).height}
               onClick={() => openModal(item)}
-              className="mb-4 w-full rounded-xl"
+              className="mb-4 flex w-full rounded-xl"
               loading="lazy"
             />
           ))}
         </InfiniteScroll>
       ) : (
-        <div className="container mx-auto columns-1 px-4 pt-32 sm:w-5/6 sm:columns-2 lg:w-4/5 lg:columns-3 2xl:w-3/4 2xl:columns-4">
+        <div className="container mx-auto columns-1 gap-8 pt-32 sm:w-5/6 sm:columns-2 lg:w-4/5 lg:columns-3 2xl:w-3/4 2xl:columns-4">
           {Array.from(Array(24).keys()).map((_, index) => (
             <ImageSkeleton key={index} size={Math.random() > 0.5 ? 'sm' : 'lg'} />
           ))}
