@@ -4,10 +4,12 @@ import ImageModal from '@components/ImageModal';
 import ScrollToTop from '@components/ScrollToTop';
 import ImageSkeleton from '@components/elements/Skeleton/ImageSkeleton';
 import { useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import GalleryImage from './GalleryImage';
 
 const Photos: React.FC = () => {
-  const { data: photos, isLoading } = useGetRandomPhotosQuery();
+  const [site, setSite] = useState(1);
+  const { data: photos, isLoading } = useGetRandomPhotosQuery(site);
   const [selectedImage, setSelectedImage] = useState<IUnsplashPhoto | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -30,30 +32,37 @@ const Photos: React.FC = () => {
   return (
     <>
       {isModalOpen === true && selectedImage !== null && <ImageModal onClose={closeModal} imageData={selectedImage} />}
-      <section
-        id="photos-section"
-        className="container mx-auto columns-1 px-4 pt-32 sm:w-5/6 sm:columns-2 lg:w-4/5 lg:columns-3 2xl:w-3/4 2xl:columns-4"
-      >
-        {photos && !isLoading
-          ? photos.map((item, index) => (
-              <GalleryImage
-                key={index}
-                src={item.urls.small}
-                alt={item.description}
-                hash={item.blur_hash}
-                width={calculateAspectRatioFit(item.width, item.height, 640).width}
-                height={calculateAspectRatioFit(item.width, item.height, 640).height}
-                onClick={() => openModal(item)}
-                className="mb-4 w-full rounded-xl"
-                loading="lazy"
-              />
-            ))
-          : Array.from(Array(24).keys()).map((_, index) => (
-              <ImageSkeleton key={index} size={Math.random() > 0.5 ? 'sm' : 'lg'} />
-            ))}
+      {photos && !isLoading ? (
+        <InfiniteScroll
+          className="container mx-auto columns-1 gap-8 pt-32 sm:w-5/6 sm:columns-2 lg:w-4/5 lg:columns-3 2xl:w-3/4 2xl:columns-4"
+          hasMore={photos ? true : false}
+          dataLength={photos.length}
+          next={() => setSite(site + 1)}
+          loader={''}
+        >
+          {photos.map((item, index) => (
+            <GalleryImage
+              key={index}
+              src={item.urls.small}
+              alt={item.description}
+              hash={item.blur_hash}
+              width={calculateAspectRatioFit(item.width, item.height, 640).width}
+              height={calculateAspectRatioFit(item.width, item.height, 640).height}
+              onClick={() => openModal(item)}
+              className="mb-4 flex w-full rounded-xl"
+              loading="lazy"
+            />
+          ))}
+        </InfiniteScroll>
+      ) : (
+        <div className="container mx-auto columns-1 gap-8 pt-32 sm:w-5/6 sm:columns-2 lg:w-4/5 lg:columns-3 2xl:w-3/4 2xl:columns-4">
+          {Array.from(Array(24).keys()).map((_, index) => (
+            <ImageSkeleton key={index} size={Math.random() > 0.5 ? 'sm' : 'lg'} />
+          ))}
+        </div>
+      )}
 
-        <ScrollToTop />
-      </section>
+      <ScrollToTop />
     </>
   );
 };
