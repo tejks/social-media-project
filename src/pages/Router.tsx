@@ -9,7 +9,7 @@ import Posts from '@pages/Posts/Posts';
 import Footer from '@/components/Layout/Footer';
 import RouteWrapper from '@/components/Layout/RouteWrapper';
 import Photos from '@pages/Photos/Photos';
-import Albums from './Albums';
+import Albums from './Albums/Albums';
 import Home from './Home';
 import Login from './Login';
 import Signup from './Signup';
