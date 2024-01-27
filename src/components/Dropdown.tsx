@@ -51,30 +51,3 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(({ options, isOpen, i
 });
 
 export default Dropdown;
-
-// import React, { useState, useRef, useEffect, ForwardRefExoticComponent } from 'react';
-
-// export default function withClickOutside(WrappedComponent: ForwardRefExoticComponent<any>) {
-//   const Component = (props: any) => {
-//     const [open, setOpen] = useState(false);
-
-//     const ref = useRef<HTMLDivElement>();
-
-//     useEffect(() => {
-//       const handleClickOutside = (event: React.MouseEvent<HTMLDivElement>) => {
-//         if (ref.current && ref.current.contains(event.target)) {
-//           setOpen(false);
-//         }
-//       };
-//       document.addEventListener('mousedown', handleClickOutside);
-
-//       return () => {
-//         document.removeEventListener('mousedown', handleClickOutside);
-//       };
-//     }, [ref]);
-
-//     return <WrappedComponent open={open} setOpen={setOpen} ref={ref} {...props} />;
-//   };
-
-//   return Component;
-// }

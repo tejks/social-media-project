@@ -68,7 +68,7 @@ const PostElement: React.FC<PostElementProps> = ({ post, route = true, auth, onP
 
       setIsLiked(!isLiked);
     } catch (error) {
-      console.error(error);
+      // TODO: Handle error with notification
     }
   };
 

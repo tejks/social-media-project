@@ -35,7 +35,6 @@ const Navbar: React.FC = () => {
   const [navbarMenu, setNavbarMenu] = useState<NavbarMenuElement[]>([
     { name: 'Home', url: '/', isActive: true },
     { name: 'Posts', url: '/posts', isActive: false },
-    { name: 'Albums', url: '/albums', isActive: false },
     { name: 'Photos', url: '/photos', isActive: false },
     { name: 'Sign in', url: '/login', isActive: false, isMobile: true },
   ]);

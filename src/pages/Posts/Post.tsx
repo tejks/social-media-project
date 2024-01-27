@@ -47,7 +47,7 @@ const Post: React.FC = () => {
       });
       Promise.all([refetchPost(), refreshComments()]);
     } catch (error) {
-      console.error(error);
+      // TODO: Handle error with notification
     }
   };
 
@@ -56,7 +56,7 @@ const Post: React.FC = () => {
       await deleteComment(id);
       Promise.all([refetchPost(), refreshComments()]);
     } catch (error) {
-      console.error(error);
+      // TODO: Handle error with notification
     }
   };
 
@@ -65,7 +65,7 @@ const Post: React.FC = () => {
       await deletePost(id);
       navigate('/posts');
     } catch (error) {
-      console.error(error);
+      // TODO: Handle error with notification
     }
   };
 

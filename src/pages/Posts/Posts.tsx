@@ -30,7 +30,7 @@ const Posts: React.FC = () => {
 
       setDisplayPosts((e) => [post, ...e!]);
     } catch (error) {
-      console.error(error);
+      // TODO: Handle error with notification
     }
   };
 
