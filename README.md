@@ -12,6 +12,7 @@ A lightweight, modern front-end for managing an assets portfolio (cryptocurrenci
 
 - [Project Overview](#project-overview)
 - [Key Features](#key-features)
+- [Screenshots](#screenshots)
 - [Architecture Notes](#architecture-notes)
 - [Technologies](#technologies)
 - [Prerequisites](#prerequisites)
@@ -37,6 +38,11 @@ The app is designed as a lightweight SPA with an emphasis on readable code and e
 - Add / edit transactions (buy, sell, transfer)
 - Transaction history with sorting and pagination
 - User authentication (login / signup)
+
+## Screenshots
+
+![Screenshot 1](docs/assets/landing.png)
+![Screenshot 2](docs/assets/post_with_comments.png)
 
 ## Architecture Notes
 
@@ -138,4 +144,3 @@ Short summary:
 ## License
 
 This project is released under the MIT License — see the `LICENSE` file for details.
-
