@@ -1,12 +1,12 @@
 <div align="center">
-	<img src="docs/assets/chat.svg" alt="logo" width="150" height="150" />
+  <img src="docs/assets/chat.svg" alt="logo" width="150" height="150" />
 
-<h1 align="center">Portfolio Manager Web</h1>
+  <h1 align="center">Social Media Project — Web</h1>
 </div>
 
 </br>
 
-A lightweight, modern front-end for managing an assets portfolio (cryptocurrencies, tokens, stocks, etc.). The app provides a portfolio overview, transaction history, and forms to add or edit transactions. It integrates with backend services for authentication and data persistence.
+A modern single-page social media web client built with Vite, React, and TypeScript. It provides user authentication, posts feed, comments, photo gallery, and profile management. The UI is component-driven, responsive, and uses Tailwind CSS with SCSS helpers.
 
 ## Table of Contents
 
@@ -18,26 +18,30 @@ A lightweight, modern front-end for managing an assets portfolio (cryptocurrenci
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Running](#running)
-- [Configuration](#configuration)
 - [Key Files](#key-files)
-- [Development & Testing](#development--testing)
 - [Contributing](#contributing)
 - [License](#license)
 
 ## Project Overview
 
-This repository contains the front-end of a Portfolio Manager application built with Vite, React, and TypeScript. It consumes backend APIs (auth, tokens, transactions) to display current balances, token metadata, and transaction history.
+This repository contains the front-end of a social media application. The app supports:
 
-The app is designed as a lightweight SPA with an emphasis on readable code and easy backend integration.
+- Authentication (login / signup)
+- Creating, listing and viewing posts
+- Commenting on posts
+- Uploading and browsing photos
+- User profiles with avatars
+
+The front-end consumes backend APIs for auth, posts, comments and photos located under `src/common/API/services`.
 
 ## Key Features
 
-- Portfolio overview with aggregated values
-- Asset list with search and filtering
-- Asset detail view with live price display
-- Add / edit transactions (buy, sell, transfer)
-- Transaction history with sorting and pagination
-- User authentication (login / signup)
+- Feed with paginated posts
+- Post creation with text and image upload
+- Comment threads and replies
+- User profile and avatar upload (drag & drop)
+- Search users and posts via the navbar
+- Responsive layout and image modal viewer
 
 ## Screenshots
 
@@ -46,30 +50,28 @@ The app is designed as a lightweight SPA with an emphasis on readable code and e
 
 ## Architecture Notes
 
-- Components and pages are organized under `src/components` and `src/pages` respectively.
-- Global state is managed via Redux Toolkit in `src/store`.
-- API communication is implemented in `src/common/API/services`.
-- Styling uses Tailwind CSS with SCSS for component-level styles.
+- Component structure: `src/components` (UI primitives under `elements`)
+- Pages: `src/pages` (Home, Login, Signup, Posts, Photos)
+- State: Redux Toolkit in `src/store` (authentication slice + others)
+- API layer: `src/common/API/services` (auth.ts, post.ts, comment.ts, photos.ts)
 
 Recommendations:
 
-- Ensure the backend supports pagination and rate limiting for transaction lists.
-- Implement client-side caching and background refresh for asset prices.
-- Add integration tests for API service layers using mocked responses.
+- Keep API contracts in `src/common/API/interfaces` to ease type-safe requests
+- Centralize environment-driven base URL in `src/config/env.ts`
 
 ## Technologies
 
 - Vite
 - React + TypeScript
-- Tailwind CSS, PostCSS, SCSS
+- Tailwind CSS + SCSS
 - Redux Toolkit
-- fetch / axios (in `src/common/API/services`)
+- fetch / axios for API calls
 
 ## Prerequisites
 
 - Node.js (LTS recommended)
 - npm or yarn
-- Running backend API (local or remote) for full integration
 
 ## Installation
 
@@ -83,63 +85,37 @@ yarn
 
 ## Running
 
-Start in development mode (Vite):
+Start the development server:
 
 ```bash
 npm run dev
 ```
 
-Build for production and preview:
+Build and preview production:
 
 ```bash
 npm run build
 npm run preview
 ```
 
-## Configuration
-
-Main configuration is located in `src/config/env.ts`.
-
-Example `.env` variables:
-
-```env
-VITE_API_BASE_URL=https://api.example.com
-VITE_NODE_ENV=development
-```
-
-Make sure the backend endpoints (auth, tokens, transactions) are reachable under `VITE_API_BASE_URL`.
-
 ## Key Files
 
 - [src/main.tsx](src/main.tsx) — application entry point
 - [src/index.scss](src/index.scss) — global styles
-- [src/store](src/store) — Redux configuration
-- [src/components](src/components) — UI components
-- [src/pages](src/pages) — application pages
-- [src/common/API/services](src/common/API/services) — API services (`auth.ts`, `photos.ts`, `post.ts`, `comment.ts`)
-
-## Development & Testing
-
-- Run linter and formatter before creating a PR if configured (`npm run lint`, `npm run format`).
-- Add unit and integration tests for critical components and API services.
-
-Common development commands:
-
-```bash
-npm run dev      # development server
-npm run build    # production build
-npm run preview  # preview production build
-```
+- [src/store](src/store) — Redux configuration and slices
+- [src/components](src/components) — shared UI components and elements
+- [src/pages](src/pages) — page-level components (Home, Posts, Photos, Login, Signup)
+- [src/common/API/services](src/common/API/services) — API service modules
+- [src/common/API/models](src/common/API/models) — typed response models
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines and PR preparation.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines. Short workflow:
 
-Short summary:
-
-- Open issues for bugs or feature requests.
-- Fork the repo, create a feature/fix branch, and submit a PR.
-- Ensure the project builds locally before submitting a PR.
+- Open an issue for major changes
+- Create a feature branch
+- Run the app and ensure it builds locally
+- Submit a PR with tests or screenshots when applicable
 
 ## License
 
