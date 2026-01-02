@@ -22,7 +22,6 @@ A lightweight, modern front-end for managing an assets portfolio (cryptocurrenci
 - [Development & Testing](#development--testing)
 - [Contributing](#contributing)
 - [License](#license)
-- [Roadmap & Limitations](#roadmap--limitations)
 
 ## Project Overview
 
