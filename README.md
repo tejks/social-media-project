@@ -1,8 +1,10 @@
 <div align="center">
 	<img src="docs/assets/chat.svg" alt="logo" width="150" height="150" />
 
-<h2 align="center">Portfolio Manager Web</h2>
+<h1 align="center">Portfolio Manager Web</h1>
 </div>
+
+</br>
 
 A lightweight, modern front-end for managing an assets portfolio (cryptocurrencies, tokens, stocks, etc.). The app provides a portfolio overview, transaction history, and forms to add or edit transactions. It integrates with backend services for authentication and data persistence.
 
